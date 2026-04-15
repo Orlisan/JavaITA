@@ -120,10 +120,15 @@ public class Main {
           parole.put("Lista", "List");
           parole.put("Vettore", "Array");
           parole.put("ListaDiVettori", "ArrayList");
+          parole.put("senza parametri", "()");
           parole.put("nuovo", "new");
           parole.put("nuova", "new");
           parole.put("nuovi", "new");
           parole.put("nuove", "new");
+          parole.put("un nuovo", "new");
+          parole.put("una nuova", "new");
+          parole.put("dei nuovi", "new");
+          parole.put("dellenuove", "new");
           parole.put("Mappa", "Map");
           parole.put("MappaIndicizzata", "HashMap");
           parole.put("Dizionario", "HashMap");
@@ -155,6 +160,8 @@ public class Main {
           parole.put(", fai", ") {");
           parole.put("in vettori", "[]");
           parole.put("contenente", "[");
+          parole.put("nella posizione", "[");
+          parole.put("del vettore", "]");
           parole.put("fatta da", "[");
           parole.put("fatto da", "[");
           parole.put("valori", "]");
