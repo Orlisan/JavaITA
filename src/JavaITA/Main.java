@@ -405,6 +405,7 @@ public class Main {
           parole.put("identitàHash", "identityHashCode");
           parole.put("lineaSeparatrice", "lineSeparator");
           parole.put("contieneChiave", "containsKey");
+          parole.put("che", "");
           
           mappaInvertita = parole.entrySet()
 				    .stream()
