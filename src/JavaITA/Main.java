@@ -455,7 +455,6 @@ public class Main {
         }
 
         caratteri = new char[(int) file.length()];
-        new File(System.getProperty("user.home") +"/AppData/Local/JavaITA/output").mkdirs(); 
         String nomeConEstensione = file.getName();
         
         fileName = "";
@@ -466,8 +465,17 @@ public class Main {
         } else {
             fileName = nomeConEstensione;
         }
-        File tempFile = new File(System.getProperty("user.home") +"/AppData/Local/JavaITA/output/" + fileName+".java");
-        fw = new FileWriter(tempFile);
+        String homeUtente = System.getProperty("user.home");
+        String cartellaBase;
+
+        if (System.getProperty("os.name").toLowerCase().contains("win")) {
+            cartellaBase = homeUtente + "/AppData/Local/JavaITA/output";
+        } else {
+            cartellaBase = homeUtente + "/.javaita/output";
+        }
+
+        new File(cartellaBase).mkdirs();
+        File tempFile = new File(cartellaBase + "/" + fileName + ".java"); fw = new FileWriter(tempFile);
 
         try {
             String contenuto = Files.readString(file.toPath());
@@ -503,13 +511,37 @@ public class Main {
         }
         fw.close(); 
         try {
-            if(!eseguiSubito) {
-            	new ProcessBuilder("cmd", "/c", "javac \"" + System.getProperty("user.home") + "/AppData/Local/JavaITA/output/" + fileName + ".java\" && java -cp \"" + System.getProperty("user.home") + "/AppData/Local/JavaITA/output/\" " + fileName).inheritIO().start().waitFor();
-            	}
-            if(!mantieniFile) {
-            for (File f : new File(System.getProperty("user.home") +"/AppData/Local/JavaITA/output").listFiles()) {
-                if (f.getName().startsWith(fileName)) f.delete();
-            }
+        	if (!eseguiSubito) {
+        	    String separator = File.pathSeparator; 
+        	    String binPath = cartellaBase;
+        	    String javaFile = binPath + "/" + fileName + ".java";
+
+        	    try {
+        	        Process compile = new ProcessBuilder("javac", javaFile)
+        	                .inheritIO()
+        	                .start();
+        	        int exitCode = compile.waitFor();
+
+        	        if (exitCode == 0) {
+        	            new ProcessBuilder("java", "-cp", binPath, fileName)
+        	                    .inheritIO()
+        	                    .start()
+        	                    .waitFor();
+        	        }
+        	    } catch (Exception e) {
+        	        e.printStackTrace();
+        	    }
+        	}
+        	if (!mantieniFile) {
+                File dir = new File(cartellaBase);
+                File[] files = dir.listFiles();
+                if (files != null) {
+                    for (File f : files) {
+                        if (f.getName().startsWith(fileName)) {
+                            f.delete();
+                        }
+                    }
+                }
             }
         } catch (Exception e) { e.printStackTrace(); }
     }
