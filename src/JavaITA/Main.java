@@ -153,7 +153,7 @@ try {
 
         while (puntatore != caratteri.length) {
             charCorrente = caratteri[puntatore];
-            if(puntatore-1 < caratteri.length && puntatore-2 > caratteri.length) {
+            if(!(puntatore-1 < 0) && !(puntatore-2 < 0)) {
 	            if ((charCorrente == '\'' && !(caratteri[puntatore+1] == '\'' && caratteri[puntatore-1] == '\'' ) && !(caratteri[puntatore-1] == '\'' && caratteri[puntatore-2] == '\'' ))|| charCorrente == '\"' && !(caratteri[puntatore+1] == '\"' && caratteri[puntatore-1] == '\"' ) && !(caratteri[puntatore-1] == '\"' && caratteri[puntatore-2] == '\"' )) {
 	                isString = !isString; 
 	            } 
