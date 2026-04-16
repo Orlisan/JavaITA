@@ -1,0 +1,22 @@
+Errore->Error
+lancia->throw 
+lancia Errori->throws 
+lancia errori->throws 
+lancia errore->throws 
+lancia Errore->throws 
+che lancia gli errori->throws 
+che lancia l errore->throws 
+che può lanciare->throws 
+può lanciare->throws 
+può lanciare l errore->throws 
+che può lanciare l errore->throws 
+Lanciabile->Throwable
+Eccezione->Exception
+Errore Di Runtime->RuntimeException
+Argomento Illegale->IllegalArgumentException
+Stato Illegale->IllegalStateException
+Indice Fuori Limite->IndexOutOfBoundsException
+Classe Non Trovata->ClassNotFoundException
+Operazione Non Supportata->UnsupportedOperationException
+Aritmetica Fallita->ArithmeticException
+Interruzione Improvvisa->InterruptedException
