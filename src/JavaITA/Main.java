@@ -29,13 +29,13 @@ public class Main {
     static boolean eseguiSubito = false;
     static boolean mantieniFile = false;
     static boolean invertiTranspiler = false;
-    static String pathCodice = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+    static String pathCodice = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath().concat("/..");
     
     
     static final HashMap<String, String> parole = new HashMap<>();
     static {
 try {
-        File extension = new File(pathCodice + "/JavaITA/extensions");
+        File extension = new File(pathCodice + "/extensions");
         extension.mkdirs();
         if(!extension.isDirectory() || !extension.exists()) {
         	throw new Exception("la directory extensions non esiste");
