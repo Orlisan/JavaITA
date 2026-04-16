@@ -153,22 +153,25 @@ try {
 
         while (puntatore != caratteri.length) {
             charCorrente = caratteri[puntatore];
-            
-            if ((charCorrente == '\'' && !(caratteri[puntatore+1] == '\'' && caratteri[puntatore-1] == '\'' ) && !(caratteri[puntatore-1] == '\'' && caratteri[puntatore-2] == '\'' ))|| charCorrente == '\"' && !(caratteri[puntatore+1] == '\"' && caratteri[puntatore-1] == '\"' ) && !(caratteri[puntatore-1] == '\"' && caratteri[puntatore-2] == '\"' )) {
-                isString = !isString; 
-            } 
-            if(charCorrente == '/' && caratteri[puntatore +1] == '/' && !isComment) {
-            	isComment = true;
+            if(puntatore-1 < caratteri.length && puntatore-2 > caratteri.length) {
+	            if ((charCorrente == '\'' && !(caratteri[puntatore+1] == '\'' && caratteri[puntatore-1] == '\'' ) && !(caratteri[puntatore-1] == '\'' && caratteri[puntatore-2] == '\'' ))|| charCorrente == '\"' && !(caratteri[puntatore+1] == '\"' && caratteri[puntatore-1] == '\"' ) && !(caratteri[puntatore-1] == '\"' && caratteri[puntatore-2] == '\"' )) {
+	                isString = !isString; 
+	            } 
             }
-            if(charCorrente == '\n' && isComment) {
-            	isComment = false;
-            }
-            if(charCorrente == '/' && caratteri[puntatore +1] == '*' && !isComment2) {
-            	isComment2 = true;
-            }
-            if(charCorrente == '*' && caratteri[puntatore +1] == '/' && isComment2) {
-            	isComment2 = false;
-            }
+            if(puntatore+1 < caratteri.length) {
+	            if(charCorrente == '/' && caratteri[puntatore +1] == '/' && !isComment) {
+	            	isComment = true;
+	            }
+	            if(charCorrente == '\n' && isComment) {
+	            	isComment = false;
+	            }
+	            if(charCorrente == '/' && caratteri[puntatore +1] == '*' && !isComment2) {
+	            	isComment2 = true;
+	            }
+	            if(charCorrente == '*' && caratteri[puntatore +1] == '/' && isComment2) {
+	            	isComment2 = false;
+	            }
+	            }
             if (!isString && !isComment && !isComment2) {
                 if (scanChar(puntatore)) continue; 
             }
