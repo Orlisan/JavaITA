@@ -155,6 +155,9 @@ caso->case
 salta->continue
 continua->continue
 sommato a-> + 
+concatenato a-> + 
+concatenata a-> +
+unito a-> + 
 sottratto a-> - 
 sommata a-> + 
 sottratta a-> - 
