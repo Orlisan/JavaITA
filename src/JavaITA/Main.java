@@ -29,11 +29,13 @@ public class Main {
     static boolean eseguiSubito = false;
     static boolean mantieniFile = false;
     static boolean invertiTranspiler = false;
+    static String pathCodice = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath();
+    
     
     static final HashMap<String, String> parole = new HashMap<>();
     static {
 try {
-        File extension = new File("./JavaITA/extensions");
+        File extension = new File(pathCodice + "/JavaITA/extensions");
         extension.mkdirs();
         if(!extension.isDirectory() || !extension.exists()) {
         	throw new Exception("la directory extensions non esiste");
@@ -152,7 +154,7 @@ try {
         while (puntatore != caratteri.length) {
             charCorrente = caratteri[puntatore];
             
-            if (charCorrente == '\'' || charCorrente == '\"') {
+            if ((charCorrente == '\'' && !(caratteri[puntatore+1] == '\'' && caratteri[puntatore-1] == '\'' ) && !(caratteri[puntatore-1] == '\'' && caratteri[puntatore-2] == '\'' ))|| charCorrente == '\"' && !(caratteri[puntatore+1] == '\"' && caratteri[puntatore-1] == '\"' ) && !(caratteri[puntatore-1] == '\"' && caratteri[puntatore-2] == '\"' )) {
                 isString = !isString; 
             } 
             if(charCorrente == '/' && caratteri[puntatore +1] == '/' && !isComment) {
