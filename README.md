@@ -25,6 +25,7 @@ Dopo aver seguito i passaggi sopraelencati per usare il transpilatore bisognerà
 ```-r``` o ```/r``` : compie il processo opposto: trasforma un file.java in un file in javaita, funziona solo con programmi semplici, data la varietà di termini italiani per eseguire un solo termine, per ovvie ragioni, non compila nè esegue
 
 ```-?```, ```/?``` o ```help``` : mostra una una lista simile a questa
+```-p``` o ```/p``` : pulisce tutte le cache contenute nelle AppData
 
 ### Requisiti
 
