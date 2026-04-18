@@ -13,6 +13,7 @@ import java.nio.file.*;
 
 public class Main {
     static String percorso; 
+    static String cartellaBase;
     static File file;
     static char[] caratteri;
     static int puntatore = 0;
@@ -82,9 +83,16 @@ try {
 				    ));
     }
     public static void main(String[] args) throws Exception { 
-        if (args.length >= 1) {
+    	String homeUtente = System.getProperty("user.home");
+    	if (System.getProperty("os.name").toLowerCase().contains("win")) {
+            cartellaBase = homeUtente + "/AppData/Local/JavaITA/output";
+        } else {
+            cartellaBase = homeUtente + "/.javaita/output";
+        }
+    	if (args.length >= 1) {
             percorso = args[0];
             file = new File(percorso);
+          
             if(percorso.equals("-?") || percorso.equals("help") || percorso.equals("/?")) {
             	System.out.println("UTILIZZO DI JAVAITA:"
         				+ "\njavaita <percorso> <parametri>"
@@ -95,6 +103,15 @@ try {
         				+ "\n Attenzione, l'utilizzo dello strumento di revert\n è sconsigliato per progetti medio-complicati,\nData l'imprevedibilità dei termini su concetti avanzati"
         				+ "\n\n-? Mostra questa legenda");
         				return;
+            }else if(percorso.equals("-p") || percorso.equals("/p")) {
+            	File dir = new File(cartellaBase);
+                File[] files = dir.listFiles();
+                if (files != null) {
+                    for (File f : files) {
+                            f.delete();
+                    	}
+                }
+                return;
             }
             for(String arg: args) {
             	if(arg.equals("-s") || arg.equals("/s")) {
@@ -114,8 +131,17 @@ try {
             				+ "\n Attenzione, l'utilizzo dello strumento di revert\n è sconsigliato per progetti medio-complicati,\nData l'imprevedibilità dei termini su concetti avanzati"
             				+ "\n\n-? Mostra questa legenda");
             				return;
-            	}
+            	}else if(arg.equals("-p") || arg.equals("/p")) {
+                	File dir = new File(cartellaBase);
+                    File[] files = dir.listFiles();
+                    if (files != null) {
+                        for (File f : files) {
+                                f.delete();
+                        	}
+                    }
+                }
             }
+            if(!file.getName().endsWith(".javaita")) {throw new Exception("IL file allegato non è un file  JavaITA");}
         } else {
             throw new Exception("Errore di sintassi, uso: javaita <percorso>");
         }
@@ -131,15 +157,6 @@ try {
         } else {
             fileName = nomeConEstensione;
         }
-        String homeUtente = System.getProperty("user.home");
-        String cartellaBase;
-
-        if (System.getProperty("os.name").toLowerCase().contains("win")) {
-            cartellaBase = homeUtente + "/AppData/Local/JavaITA/output";
-        } else {
-            cartellaBase = homeUtente + "/.javaita/output";
-        }
-
         new File(cartellaBase).mkdirs();
         File tempFile = new File(cartellaBase + "/" + fileName + ".java"); fw = new FileWriter(tempFile);
 

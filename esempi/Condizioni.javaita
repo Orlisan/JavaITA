@@ -1,0 +1,18 @@
+pubblica classe Condizioni , cioé
+	pubblico statico vuoto principale che richiede la Stringa in vettori args fine , cioé
+	
+		intero variabile1 diventa 3;
+		Stringa variabile2 diventa "Ciao sono la variabile 2";
+		decimale variabile3 diventa 5.76f;
+		booleano variabile4 diventa falsa;
+		se è vero che la variabile1 è uguale a 3 allora
+		Sistema.uscita.stampaANuovaRiga variabile1 concatenata a " è uguale a 3" fine;
+.               se è vero che variabile2.equivaleA "Ciao sono la variabile 2" fine allora
+		Sistema.uscita.stampaANuovaRiga variabile2 fine;
+.               se è vero che variabile3 è uguale a 6.77f allora
+		Sistema.uscita.stampaANuovaRiga variabile3 fine;
+.               se è vero che non è vera variabile4 allora
+		Sistema.uscita.stampaANuovaRiga variabile4 fine;
+.
+.
+.

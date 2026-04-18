@@ -1,0 +1,14 @@
+pubblica classe Variabili , cioé
+	pubblico statico vuoto principale che richiede la Stringa in vettori args fine , cioé
+	
+		intero variabile1 diventa 3;
+		Stringa variabile2 diventa "Ciao sono la variabile 2";
+		decimale variabile3 diventa 5.76f;
+		booleano variabile4 diventa falsa;
+		
+		Sistema.uscita.stampaANuovaRiga variabile1 fine;
+		Sistema.uscita.stampaANuovaRiga variabile2 fine;
+		Sistema.uscita.stampaANuovaRiga variabile3 fine;
+		Sistema.uscita.stampaANuovaRiga variabile4 fine;
+.
+.

@@ -1,0 +1,6 @@
+pubblica classe HelloWorld , cioé
+	pubblico statico vuoto principale che richiede la Stringa in vettori args fine , cioé
+	
+		Sistema.uscita.stampa "Hello World" fine;
+.
+.

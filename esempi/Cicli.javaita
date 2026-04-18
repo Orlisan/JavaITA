@@ -1,0 +1,15 @@
+pubblica classe Cicli cioé
+	pubblico statico vuoto principale che richiede la Stringa in vettori args fine cioé
+		intero contatore diventa 0;
+
+		finché contatore non è uguale a 10 fai
+			Sistema.uscita.stampaANuovaRiga "il contatore è uguale a " concatenato a contatore fine;
+			contatore incrementa;
+		.
+	
+		Stringa in vettori frasi diventa {"\n\nCiao, mi chiamo JavaITA", "Sono un linguaggio di programmazione", "Transpilato in Java"};
+		per ogni Stringa frase : frasi fai 
+		Sistema.uscita.stampaANuovaRiga frase fine;
+		.
+.
+.

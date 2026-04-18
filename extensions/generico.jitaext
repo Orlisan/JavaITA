@@ -3,8 +3,8 @@ Principale->Main
 principale->main
 Sistema->System
 uscita->out
-stampa->print
-stampaANuovaRiga->println
+stampa->print(
+stampaANuovaRiga->println(
 se è vero che->if(
 se è vero che la->if(
 se è vero che il->if(
@@ -101,7 +101,9 @@ Mappa->Map
 MappaIndicizzata->HashMap
 Dizionario->HashMap
 falso->false
+falsa->false
 vero->true
+vera->true
 diventa-> = 
 è uguale a-> == 
 è maggiore o uguale a-> >= 
@@ -117,6 +119,8 @@ sono minori a-> <
 sono maggiori a-> > 
 non sono uguali a-> != 
 non-> ! 
+non è vero-> ! 
+non è vera-> ! 
 assieme a-> &&  
 oppure-> ||  
 per->for( 
@@ -143,6 +147,12 @@ cioè-> {
 , cioé-> { 
 , cioè-> { 
 che richiede-> ( 
+che richiede lo-> ( 
+che richiede la-> ( 
+che richiede i-> ( 
+che richiede gli-> ( 
+che richiede le-> ( 
+che richiede il-> (  
 , fine-> ) 
 fine-> ) 
 fino a quando->while( 
@@ -179,8 +189,8 @@ aumenta di-> +=
 diminuisce di-> -= 
 si moltiplica di-> *= 
 si divide di-> /= 
-contiene->contains
-equivale a->equals
+contiene->contains(
+equivaleA->equals(
 carattre al posto->charAt
 inMaiuscolo->toUpperCase
 inmaiuscolo->toUpperCase
