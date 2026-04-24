@@ -121,6 +121,8 @@ try {
             	}else if(arg.equals("-r") || arg.equals("/r")) {
             		System.out.println("Attenzione, l'utilizzo dello strumento di revert\n è sconsigliato per progetti medio-complicati,\nData l'imprevedibilità dei termini su concetti avanzati");
             		invertiTranspiler = true;
+            		mantieniFile = true;
+            		eseguiSubito = true;
             	}else if(arg.equals("-?") || arg.equals("help") || arg.equals("/?")) {
             		System.out.println("UTILIZZO DI JAVAITA:"
             				+ "\njavaita <percorso> <parametri>"
@@ -141,7 +143,7 @@ try {
                     }
                 }
             }
-            if(!file.getName().endsWith(".javaita")) {throw new Exception("IL file allegato non è un file  JavaITA");}
+            if(!file.getName().endsWith(".javaita") && !invertiTranspiler) {throw new Exception("IL file allegato non è un file  JavaITA");}
         } else {
             throw new Exception("Errore di sintassi, uso: javaita <percorso>");
         }
@@ -158,7 +160,11 @@ try {
             fileName = nomeConEstensione;
         }
         new File(cartellaBase).mkdirs();
+        if(!invertiTranspiler) {
         File tempFile = new File(cartellaBase + "/" + fileName + ".java"); fw = new FileWriter(tempFile);
+        }else {
+        	File tempFile = new File(cartellaBase + "/" + fileName + ".javaita"); fw = new FileWriter(tempFile);
+        }
 
         try {
             String contenuto = Files.readString(file.toPath());
