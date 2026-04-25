@@ -26,6 +26,10 @@ Dopo aver seguito i passaggi sopraelencati per usare il transpilatore bisognerà
 
 ```-?```, ```/?``` o ```help``` : mostra una una lista simile a questa
 
+```-p``` o ```/p``` : pulisce tutti i file nella cartella del programma.
+
+```-a <arg1> <arg2> ...``` o ```/a <arg1> <arg2> ...``` : trasmette argomenti al programma JavaITA in esecuzione
+
 ### Requisiti
 
 Un computer con Windows, Linux o MacOS

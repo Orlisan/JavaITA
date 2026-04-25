@@ -1,348 +1,349 @@
-classe->class
-Principale->Main
-principale->main
-Sistema->System
-uscita->out
-stampa->print(
-stampaANuovaRiga->println(
-se è vero che->if(
-se è vero che la->if(
-se è vero che il->if(
-se è vero che i->if(
-se è vero che gli->if(
-se è vero che le->if(
-se è vero che lo->if(
-allora->) {
-, allora->) {
-allora fai->) {
-, allora fai->) {
-.-> } 
-assegnaProprietà->setProperty
-ottieniProprietà->getProperty
-pulisciProprietà->clearProperty
-ottieni->get
-prendi->get
-assegna->set
-aggiungi->add
-intero->int
-Intero->Integer
-Doppio->Double
-doppio->double
-Booleano->Boolean
-booleano->boolean
-Decimale->Float
-decimale->float
-immetti->put
-metti->put
-Stringa->String
-interfaccia->interface
-Sovrascrivi->Override
-pubblico->public
-pubblica->public
-protetto->protected
-protetta->protected
-predefinito->default
-predefinita->default
-privato->private
-privata->private
-carattere->char
-Carattere->Character
-vuoto->void
-vuota->void
-vuoti->void
-vuote->void
-restituisci->return
-registro->record
-se->if
-altrimenti->else
-prova->try
-cattura->catch
-infine->finally
-alla fine->finally
-immutabile->final
-finale->final
-statico->static
-statica->static
-sincronizzato->synchronized
-sincronizzata->synchronized
-questo->this
-questa->this
-questo oggetto->this
-Filo->Thread
-Processo->Thread
-Esecuzione->Thread
-padre->super
-madre->super
-superiore->super
-genitore->super
-Scannerizzatore->Scanner
-Documento->File
-Archivio->File
-ScrittoreDocumenti->FileWriter
-LettoreDocumenti->FileReader
-scrivi->write
-dormi->sleep
-corri->run
-avvia->start
-chiudi->close
-Lista->List
-Vettore->Array
-ListaDiVettori->ArrayList
-senza parametri->()
-nuovo->new
-nuova->new
-nuovi->new
-nuove->new
-un nuovo->new
-una nuova->new
-dei nuovi->new
-dellenuove->new
-Mappa->Map
-MappaIndicizzata->HashMap
-Dizionario->HashMap
-falso->false
-falsa->false
-vero->true
-vera->true
-diventa-> = 
-è uguale a-> == 
-è maggiore o uguale a-> >= 
-è minore o uguale a-> <= 
-è minore a-> < 
-è maggiore a-> > 
-non è uguale a-> != 
-diventano-> = 
-sono uguali a-> == 
-sono maggiori o uguali a-> >= 
-sono minori o uguali a-> <= 
-sono minori a-> < 
-sono maggiori a-> > 
-non sono uguali a-> != 
-non-> ! 
-non è vero-> ! 
-non è vera-> ! 
-assieme a-> &&  
-oppure-> ||  
-per->for( 
-per ogni->for( 
-finchè->while( 
-finché->while( 
-finche->while( 
-fai->) {
-, fai->) {
-in vettori->[]
-contenente->[
-nella posizione->[
-del vettore->]
-fatta da->[
-fatto da->[
-valori->]
-fatta di-><
-e di-> , 
-e basta->>
-cioe-> { 
-cioé-> { 
-cioè-> { 
-, cioe-> { 
-, cioé-> { 
-, cioè-> { 
-che richiede-> ( 
-che richiede lo-> ( 
-che richiede la-> ( 
-che richiede i-> ( 
-che richiede gli-> ( 
-che richiede le-> ( 
-che richiede il-> (  
-, fine-> ) 
-fine-> ) 
-fino a quando->while( 
-interrompi il ciclo->break
-spacca->break
-scegli con->switch
-scegli->switch
-scegli tramite->switch
-caso->case
-salta->continue
-continua->continue
-sommato a-> + 
-concatenato a-> + 
-concatenata a-> +
-unito a-> + 
-sottratto a-> - 
-sommata a-> + 
-sottratta a-> - 
-moltiplicato per-> * 
-diviso per-> / 
-moltiplicata per-> * 
-divisa per-> / 
-fratto per-> * 
-fratta per-> / 
-incrementa-> ++ 
-Lunghezza->length
-lunghezza->length
-modulo-> % 
-diviso->split
-indice di->indexOf
-Divisa in caratteri->toCharArray
-Diviso in caratteri->toCharArray
-aumenta di-> += 
-diminuisce di-> -= 
-si moltiplica di-> *= 
-si divide di-> /= 
-contiene->contains(
-equivaleA->equals(
-carattre al posto->charAt
-inMaiuscolo->toUpperCase
-inmaiuscolo->toUpperCase
-inMinuscolo->toLowerCase
-inminuscolo->toLowerCase
-dentro a-> : 
-interno a-> : 
-iniziaCon->startsWith
-finisceCon->endsWith
-lungo->long
-largo->long
-inTesto->toString
-inIntero->parseInt
-inDoppio->parseDouble
-prossimaRiga->nextLine
-prossimoIntero->nextInt
-nullo->null
-nulla->null
-nulli->null
-nulle->null
-è vuota->isEmpty
-è vuoto->isEmpty
-sono vuoti->isEmpty
-sono vuote->isEmpty
-estende->extends 
-implementa->implements 
-pacchetto->package 
-importa->import
-sigillata->sealed
-blindata->sealed
-sigillato->sealed
-blindato->sealed
-permette a->permits
-consente a->permits
-variabile->var
-astratto->abstract
-transitorio->transient
-nativo->native
-astratta->abstract
-transitoria->transient
-nativa->native
-prendiMessaggio->getMessage
-stampaTraccia->printStackTrace
-è un->instanceof
-è una->instanceof
-entrata->in
-errore->err
-esci->exit
-esciDalSistema->exit
-termina->exit
-tempoCorrente->currentTimeMillis
-tempoPreciso->nanoTime
-proprietà->getProperties
-pulisci->gc
-copiaVettore->arraycopy
-stampaFormattata->printf
-sottostringa->substring
-rimpiazza->replace
-sostituisci->replace
-sostituita->replace
-rimpiazzaTutto->replaceAll
-sostituisciTutto->replaceAll
-confronta->compareTo
-confrontata->compareTo
-confrontaIgnorandoMaiuscole->compareToIgnoreCase
-equivaleIgnorandoMaiuscole->equalsIgnoreCase
-unisci->join
-unito->join
-unita->join
-ripeti->repeat
-ripetuta->repeat
-pulisciBordi->trim
-senzaSpazi->trim
-ultimoIndiceDi->lastIndexOf
-valoreDi->valueOf
-èVuoto->isEmpty
-èVuota->isEmpty
-èBianco->isBlank
-èBianca->isBlank
-esiste->exists
-creaNuovoFile->createNewFile
-cancella->delete
-cancellata->delete
-percorso->getPath
-percorsoAssoluto->getAbsolutePath
-nome->getName
-TrovaPadre->getParent
-èUnDocumento->isFile
-èUnaCartella->isDirectory
-puòLeggere->canRead
-puòScrivere->canWrite
-puòEseguire->canExecute
-leggi->read
-svuota->flush
-pulisciFlusso->flush
-esegui->do
-mentre->while
-costruttore->constructor
-costruttrice->constructor
-volatile->volatile
-modulistica->module
-esporta->exports
-richiede->requires
-dimensione->size
-svuotaTutto->clear
-svuotaTutta->clear
-Breve->Short
-breve->short
-Numero->Number
-Oggetto->Object
-Enumerazione->Enum
-SequenzaDiCaratteri->CharSequence
-CostruttoreDiStringhe->StringBuilder
-BufferDiStringhe->StringBuffer
-clona->clone
-clonata->clone
-codiceHash->hashCode
-notifica->notify
-notificaTutti->notifyAll
-aspetta->wait
-finalizza->finalize
-Ambiente->Runtime
-ottieniAmbiente->getRuntime
-memoriaLibera->freeMemory
-memoriaTotale->totalMemory
-memoriaMassima->maxMemory
-processori disponibili->availableProcessors
-priorità->setPriority
-unisciti->join
-interrompi->interrupt
-èVivo->isAlive
-èViva->isAlive
-cediPasso->yield
-filoCorrente->currentThread
-processoCorrente->currentThread
-è lettera->isLetter
-èLettera->isLetter
-è numero->isDigit
-èNumero->isDigit
-è spazio->isWhitespace
-èSpazio->isWhitespace
-èMaiuscolo->isUpperCase
-èMaiuscola->isUpperCase
-èMinuscolo->isLowerCase
-èMinuscola->isLowerCase
-concatena->concat
-concatenata->concat
-formato->format
-formattata->format
-corrispondeA->matches
-proprietàDiSistema->getProperties
-variabileDAmbiente->getenv
-identitàHash->identityHashCode
-lineaSeparatrice->lineSeparator
-contieneChiave->containsKey
+classe-->class
+Principale-->Main
+principale-->main
+Sistema-->System
+uscita-->out
+stampa-->print(
+stampaANuovaRiga-->println(
+se è vero che-->if(
+se è vero che la-->if(
+se è vero che il-->if(
+se è vero che i-->if(
+se è vero che gli-->if(
+se è vero che le-->if(
+se è vero che lo-->if(
+allora-->) {
+, allora-->) {
+allora fai-->) {
+, allora fai-->) {
+.--> } 
+assegnaProprietà-->setProperty
+ottieniProprietà-->getProperty
+pulisciProprietà-->clearProperty
+ottieni-->get
+prendi-->get
+assegna-->set
+aggiungi-->add
+intero-->int
+Intero-->Integer
+Doppio-->Double
+doppio-->double
+Booleano-->Boolean
+booleano-->boolean
+Decimale-->Float
+decimale-->float
+immetti-->put
+metti-->put
+Stringa-->String
+interfaccia-->interface
+Sovrascrivi-->Override
+pubblico-->public
+pubblica-->public
+protetto-->protected
+protetta-->protected
+predefinito-->default
+predefinita-->default
+privato-->private
+privata-->private
+carattere-->char
+Carattere-->Character
+vuoto-->void
+vuota-->void
+vuoti-->void
+vuote-->void
+restituisci-->return
+registro-->record
+se-->if
+altrimenti-->else
+prova-->try
+cattura-->catch
+infine-->finally
+alla fine-->finally
+immutabile-->final
+finale-->final
+statico-->static
+statica-->static
+sincronizzato-->synchronized
+sincronizzata-->synchronized
+questo-->this
+questa-->this
+questo oggetto-->this
+Filo-->Thread
+Processo-->Thread
+Esecuzione-->Thread
+padre-->super
+madre-->super
+superiore-->super
+genitore-->super
+Scannerizzatore-->Scanner
+Documento-->File
+Archivio-->File
+ScrittoreDocumenti-->FileWriter
+LettoreDocumenti-->FileReader
+scrivi-->write
+dormi-->sleep
+corri-->run
+avvia-->start
+chiudi-->close
+Lista-->List
+Vettore-->Array
+ListaDiVettori-->ArrayList
+senza parametri-->()
+nuovo-->new
+nuova-->new
+nuovi-->new
+nuove-->new
+un nuovo-->new
+una nuova-->new
+dei nuovi-->new
+dellenuove-->new
+Mappa-->Map
+MappaIndicizzata-->HashMap
+Dizionario-->HashMap
+falso-->false
+falsa-->false
+vero-->true
+vera-->true
+diventa--> = 
+è uguale a--> == 
+è maggiore o uguale a--> >= 
+è minore o uguale a--> <= 
+è minore a--> < 
+è maggiore a--> > 
+non è uguale a--> != 
+diventano--> = 
+sono uguali a--> == 
+sono maggiori o uguali a--> >= 
+sono minori o uguali a--> <= 
+sono minori a--> < 
+sono maggiori a--> > 
+non sono uguali a--> != 
+non--> ! 
+non è vero--> ! 
+non è vera--> ! 
+assieme a--> &&  
+oppure--> ||  
+per-->for( 
+per ogni-->for( 
+finchè-->while( 
+finché-->while( 
+finche-->while( 
+fai-->) {
+, fai-->) {
+in vettori-->[]
+contenente-->[
+nella posizione-->[
+del vettore-->]
+fatta da-->[
+fatto da-->[
+valori-->]
+fatta di--><
+e di--> , 
+e basta-->>
+cioe--> { 
+cioé--> { 
+cioè--> { 
+, cioe--> { 
+, cioé--> { 
+, cioè--> { 
+che richiede--> ( 
+che richiede lo--> ( 
+che richiede la--> ( 
+che richiede i--> ( 
+che richiede gli--> ( 
+che richiede le--> ( 
+che richiede il--> (  
+, fine--> ) 
+fine--> ) 
+fino a quando-->while( 
+interrompi il ciclo-->break
+spacca-->break
+scegli con-->switch
+scegli-->switch
+scegli tramite-->switch
+caso-->case
+salta-->continue
+continua-->continue
+sommato a--> + 
+concatenato a--> + 
+concatenata a--> +
+unito a--> + 
+sottratto a--> - 
+sommata a--> + 
+sottratta a--> - 
+moltiplicato per--> * 
+diviso per--> / 
+moltiplicata per--> * 
+divisa per--> / 
+fratto per--> * 
+fratta per--> / 
+incrementa--> ++ 
+Lunghezza-->length
+lunghezza-->length
+modulo--> % 
+diviso-->split
+indice di-->indexOf
+Divisa in caratteri-->toCharArray
+Diviso in caratteri-->toCharArray
+aumenta di--> += 
+diminuisce di--> -= 
+si moltiplica di--> *= 
+si divide di--> /= 
+contiene-->contains(
+equivaleA-->equals(
+carattre al posto-->charAt
+inMaiuscolo-->toUpperCase
+inmaiuscolo-->toUpperCase
+inMinuscolo-->toLowerCase
+inminuscolo-->toLowerCase
+dentro a--> : 
+interno a--> : 
+iniziaCon-->startsWith
+finisceCon-->endsWith
+lungo-->long
+largo-->long
+inTesto-->toString
+inIntero-->parseInt
+inDoppio-->parseDouble
+prossimaRiga-->nextLine
+prossimoIntero-->nextInt
+nullo-->null
+nulla-->null
+nulli-->null
+nulle-->null
+è vuota-->isEmpty
+è vuoto-->isEmpty
+sono vuoti-->isEmpty
+sono vuote-->isEmpty
+estende-->extends 
+implementa-->implements 
+pacchetto-->package 
+importa-->import
+sigillata-->sealed
+blindata-->sealed
+sigillato-->sealed
+blindato-->sealed
+permette a-->permits
+consente a-->permits
+variabile-->var
+astratto-->abstract
+transitorio-->transient
+nativo-->native
+astratta-->abstract
+transitoria-->transient
+nativa-->native
+prendiMessaggio-->getMessage
+stampaTraccia-->printStackTrace
+è un-->instanceof
+è una-->instanceof
+entrata-->in
+errore-->err
+esci-->exit
+esciDalSistema-->exit
+termina-->exit
+tempoCorrente-->currentTimeMillis
+tempoPreciso-->nanoTime
+proprietà-->getProperties
+pulisci-->gc
+copiaVettore-->arraycopy
+stampaFormattata-->printf
+sottostringa-->substring
+rimpiazza-->replace
+sostituisci-->replace
+sostituita-->replace
+rimpiazzaTutto-->replaceAll
+sostituisciTutto-->replaceAll
+confronta-->compareTo
+confrontata-->compareTo
+confrontaIgnorandoMaiuscole-->compareToIgnoreCase
+equivaleIgnorandoMaiuscole-->equalsIgnoreCase
+unisci-->join
+unito-->join
+unita-->join
+ripeti-->repeat
+ripetuta-->repeat
+pulisciBordi-->trim
+senzaSpazi-->trim
+ultimoIndiceDi-->lastIndexOf
+valoreDi-->valueOf
+èVuoto-->isEmpty
+èVuota-->isEmpty
+èBianco-->isBlank
+èBianca-->isBlank
+esiste-->exists
+creaNuovoFile-->createNewFile
+cancella-->delete
+cancellata-->delete
+percorso-->getPath
+percorsoAssoluto-->getAbsolutePath
+nome-->getName
+TrovaPadre-->getParent
+èUnDocumento-->isFile
+èUnaCartella-->isDirectory
+puòLeggere-->canRead
+puòScrivere-->canWrite
+puòEseguire-->canExecute
+leggi-->read
+svuota-->flush
+pulisciFlusso-->flush
+esegui-->do
+mentre-->while
+costruttore-->constructor
+costruttrice-->constructor
+volatile-->volatile
+modulistica-->module
+esporta-->exports
+richiede-->requires
+dimensione-->size
+svuotaTutto-->clear
+svuotaTutta-->clear
+Breve-->Short
+breve-->short
+Numero-->Number
+Oggetto-->Object
+Enumerazione-->Enum
+SequenzaDiCaratteri-->CharSequence
+CostruttoreDiStringhe-->StringBuilder
+BufferDiStringhe-->StringBuffer
+clona-->clone
+clonata-->clone
+codiceHash-->hashCode
+notifica-->notify
+notificaTutti-->notifyAll
+aspetta-->wait
+finalizza-->finalize
+Ambiente-->Runtime
+ottieniAmbiente-->getRuntime
+memoriaLibera-->freeMemory
+memoriaTotale-->totalMemory
+memoriaMassima-->maxMemory
+processori disponibili-->availableProcessors
+priorità-->setPriority
+unisciti-->join
+interrompi-->interrupt
+èVivo-->isAlive
+èViva-->isAlive
+cediPasso-->yield
+filoCorrente-->currentThread
+processoCorrente-->currentThread
+è lettera-->isLetter
+èLettera-->isLetter
+è numero-->isDigit
+èNumero-->isDigit
+è spazio-->isWhitespace
+èSpazio-->isWhitespace
+èMaiuscolo-->isUpperCase
+èMaiuscola-->isUpperCase
+èMinuscolo-->isLowerCase
+èMinuscola-->isLowerCase
+concatena-->concat
+concatenata-->concat
+formato-->format
+formattata-->format
+corrispondeA-->matches
+proprietàDiSistema-->getProperties
+variabileDAmbiente-->getenv
+identitàHash-->identityHashCode
+lineaSeparatrice-->lineSeparator
+contieneChiave-->containsKey
+tale che--> -> 

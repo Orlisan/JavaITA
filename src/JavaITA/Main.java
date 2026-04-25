@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -23,14 +24,29 @@ public class Main {
     static String fileName;
     static File tempFile;
     static HashMap<String, String> mappaInvertita;
+    static ArrayList<String> jITArgs = new ArrayList<String>();
     static boolean isString = false;
     static boolean isComment = false;
     static boolean isComment2 = false;
+    static boolean isAdjustedRevert = false;
     
     static boolean eseguiSubito = false;
     static boolean mantieniFile = false;
     static boolean invertiTranspiler = false;
     static String pathCodice = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath().concat("/..");
+    static char[] delimitatori = {
+    	    ' ', '\n', '\t', '\r',
+    	    '(', ')', '{', '}', '[', ']',
+    	    '.', ',', ';', ':', 
+    	    '+', '-', '*', '/', '%', '=', '!', '>', '<', '&', '|', '^', '@'
+    	};
+    
+    static char[] delimitatoriRevert = {
+    	    ' ', '\n', '\t', '\r',
+    	    '(', ')', '{', '}', '[', ']',
+    	     ',', ';', ':', 
+    	    '+', '-', '*', '/', '%', '=', '!', '>', '<', '&', '|', '^', '@'
+    	};
     
     
     static final HashMap<String, String> parole = new HashMap<>();
@@ -60,7 +76,7 @@ try {
            br.close();
            fr.close();
            for(String riga: righeExt) {
-            String[] p = riga.split("->");
+            String[] p = riga.split("-->");
             if(p.length >= 2) {
             parole.put(p[0], p[1]); 
         //    System.out.println(parole.get(p[0]));
@@ -141,6 +157,17 @@ try {
                                 f.delete();
                         	}
                     }
+                }else if(arg.equals("-a") || arg.equals("/a")) {
+                	for(int contatore = Arrays.asList(args).indexOf(arg)+1; contatore < args.length; contatore++) {
+                		if(args[contatore].equals("-s") || args[contatore].equals("/s") || args[contatore].equals("-t") ||
+                			    args[contatore].equals("/t") || args[contatore].equals("-r") || args[contatore].equals("/r") ||
+                			    args[contatore].equals("-?") || args[contatore].equals("/?") || args[contatore].equals("help") ||
+                			    args[contatore].equals("-p") || args[contatore].equals("/p")) {
+                			break;
+                			
+                		}
+                		jITArgs.add(args[contatore]);
+                	}
                 }
             }
             if(!file.getName().endsWith(".javaita") && !invertiTranspiler) {throw new Exception("IL file allegato non è un file  JavaITA");}
@@ -204,7 +231,6 @@ try {
         fw.close(); 
         try {
         	if (!eseguiSubito) {
-        	    String separator = File.pathSeparator; 
         	    String binPath = cartellaBase;
         	    String javaFile = binPath + "/" + fileName + ".java";
 
@@ -215,10 +241,9 @@ try {
         	        int exitCode = compile.waitFor();
 
         	        if (exitCode == 0) {
-        	            new ProcessBuilder("java", "-cp", binPath, fileName)
-        	                    .inheritIO()
-        	                    .start()
-        	                    .waitFor();
+        	        	ArrayList<String> cmd = new ArrayList<>(Arrays.asList("java", "-cp", binPath, fileName));
+        	        	cmd.addAll(jITArgs);
+        	        	new ProcessBuilder(cmd).inheritIO().start().waitFor();
         	        }
         	    } catch (Exception e) {
         	        e.printStackTrace();
@@ -239,13 +264,6 @@ try {
     }
 
     public static boolean scanChar(int index) throws IOException {
-        char[] delimitatori = {
-        	    ' ', '\n', '\t', '\r',
-        	    '(', ')', '{', '}', '[', ']',
-        	    '.', ',', ';', ':', 
-        	    '+', '-', '*', '/', '%', '=', '!', '>', '<', '&', '|', '^', '@'
-        	};
-        
        
         for (String parola : paroleCorrenti().keySet().stream().sorted((a, b) -> b.length() - a.length()).toList()) {
         	 boolean isDelimitedAfter = false;
@@ -266,24 +284,29 @@ try {
            
             if (contatoreCharAppaiati == lParola) {
                 
-            	for(char del: delimitatori) {
-                	if(index -1 != -1) {
-	                	if( caratteri[index -1] == del ) {
+            	for(char del: delimitatoriCorrenti()) {
+	                if(charCorrente == del && invertiTranspiler) {
+	                	isDelimitedAfter = true;
+	                	isDelimitedThen = true; 
+            			
+	                } else {
+	                	if(index -1 != -1) {
+		                	if( caratteri[index -1] == del ) {
+		                		isDelimitedAfter = true;
+		                	
+		                	}
+	                	}else {
 	                		isDelimitedAfter = true;
-	                	
+	                		
 	                	}
-                	}else {
-                		isDelimitedAfter = true;
-                		
-                	}
-                	if (index + lParola >= caratteri.length) { 
-                        isDelimitedThen = true; 
-                    } else {
-                	if(index+lParola < caratteri.length && caratteri[index + lParola] == del) {
-                		isDelimitedThen = true;
-                	}
-                    }
-                	
+	                	if (index + lParola >= caratteri.length) { 
+	                        isDelimitedThen = true; 
+	                    } else {
+		                	if(index+lParola < caratteri.length && caratteri[index + lParola] == del) {
+		                		isDelimitedThen = true;
+		                	}
+	                    }
+	                }
                 }
             	if(isDelimitedAfter && isDelimitedThen) {
 	            	fw.write(paroleCorrenti().get(parola));
@@ -296,9 +319,26 @@ try {
     }
     static HashMap<String, String> paroleCorrenti() {
 		if(invertiTranspiler) {
+            if(!isAdjustedRevert) {
+                for(String parola: mappaInvertita.keySet()) {
+                    String parolaSpaziata = " ".concat(mappaInvertita.get(parola)).concat(" ");
+                    mappaInvertita.put(parola, parolaSpaziata);
+                }
+                
+                isAdjustedRevert = true;
+            }
 			return mappaInvertita;
 		}else {
 			return parole;
 		}
     }
+    
+    static char[] delimitatoriCorrenti() {
+    	if(invertiTranspiler) {
+    		return delimitatoriRevert;
+    	}else {
+    		return delimitatori;
+    	}
+    }
+    
     }
