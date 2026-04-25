@@ -13,7 +13,7 @@ import java.util.stream.Collectors;
 import java.nio.file.*;
 
 public class Main {
-    static String percorso; 
+    static String percorsoJavaITAFile; 
     static String cartellaBase;
     static File file;
     static char[] caratteri;
@@ -30,9 +30,14 @@ public class Main {
     static boolean isComment2 = false;
     static boolean isAdjustedRevert = false;
     
+    static boolean noPackage = false;
+    
     static boolean eseguiSubito = false;
     static boolean mantieniFile = false;
     static boolean invertiTranspiler = false;
+    static String pathCustomExtensions = null;
+    static boolean mantieniEstensioni = false;
+    static File ExternExtension;
     static String pathCodice = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath().concat("/..");
     static char[] delimitatori = {
     	    ' ', '\n', '\t', '\r',
@@ -50,54 +55,6 @@ public class Main {
     
     
     static final HashMap<String, String> parole = new HashMap<>();
-    static {
-try {
-        File extension = new File(pathCodice + "/extensions");
-        extension.mkdirs();
-        if(!extension.isDirectory() || !extension.exists()) {
-        	throw new Exception("la directory extensions non esiste");
-        }
-        if(extension.listFiles().length == 0) {
-        	throw new Exception("nessuna estensione disponibile");
-        }
-        for (File f: extension.listFiles()) {
-           if(f.getName().endsWith(".jitaext")) {
-        //	System.out.println("Trovata estensione: " + f.getName());
-            FileReader fr = new FileReader(f);
-            BufferedReader br = new BufferedReader(fr);
-           ArrayList<String> righeExt = new ArrayList<String>();
-           String linea;
-           while((linea = br.readLine()) != null) {
-                if(!linea.trim().startsWith("//")) {
-                    righeExt.add(linea);
-                   // System.out.println("Trovata linea: "+linea);
-                }
-           }
-           br.close();
-           fr.close();
-           for(String riga: righeExt) {
-            String[] p = riga.split("-->");
-            if(p.length >= 2) {
-            parole.put(p[0], p[1]); 
-        //    System.out.println(parole.get(p[0]));
-            }
-           }
-           }
-        }
-}catch(Exception  e) {
-	e.printStackTrace();
-}
-    	
-          
-          mappaInvertita = parole.entrySet()
-				    .stream()
-				    .collect(Collectors.toMap(
-				        Map.Entry::getValue, 
-				        Map.Entry::getKey,
-				        (oldValue, newValue) -> newValue, 
-				        HashMap::new                     
-				    ));
-    }
     public static void main(String[] args) throws Exception { 
     	String homeUtente = System.getProperty("user.home");
     	if (System.getProperty("os.name").toLowerCase().contains("win")) {
@@ -106,10 +63,10 @@ try {
             cartellaBase = homeUtente + "/.javaita/output";
         }
     	if (args.length >= 1) {
-            percorso = args[0];
-            file = new File(percorso);
+            percorsoJavaITAFile = args[0];
+            file = new File(percorsoJavaITAFile);
           
-            if(percorso.equals("-?") || percorso.equals("help") || percorso.equals("/?")) {
+            if(percorsoJavaITAFile.equals("-?") || percorsoJavaITAFile.equals("help") || percorsoJavaITAFile.equals("/?")) {
             	System.out.println("UTILIZZO DI JAVAITA:"
         				+ "\njavaita <percorso> <parametri>"
         				+ "\n\n\nPARAMETRI DISPONIBILI:"
@@ -119,11 +76,18 @@ try {
         				+ "\n Attenzione, l'utilizzo dello strumento di revert\n è sconsigliato per progetti medio-complicati,\nData l'imprevedibilità dei termini su concetti avanzati"
         				+ "\n\n-? Mostra questa legenda");
         				return;
-            }else if(percorso.equals("-p") || percorso.equals("/p")) {
+            }else if(percorsoJavaITAFile.equals("-p") || percorsoJavaITAFile.equals("/p")) {
             	File dir = new File(cartellaBase);
                 File[] files = dir.listFiles();
                 if (files != null) {
                     for (File f : files) {
+                            f.delete();
+                    	}
+                }
+                File dirExt = new File(cartellaBase.concat("/.."));
+                File[] filesExt = dirExt.listFiles();
+                if (filesExt != null) {
+                    for (File f : filesExt) {
                             f.delete();
                     	}
                 }
@@ -157,24 +121,113 @@ try {
                                 f.delete();
                         	}
                     }
+                    File dirExt = new File(cartellaBase.concat("/.."));
+                    File[] filesExt = dirExt.listFiles();
+                    if (filesExt != null) {
+                        for (File f : filesExt) {
+                                f.delete();
+                        	}
+                    }
                 }else if(arg.equals("-a") || arg.equals("/a")) {
                 	for(int contatore = Arrays.asList(args).indexOf(arg)+1; contatore < args.length; contatore++) {
                 		if(args[contatore].equals("-s") || args[contatore].equals("/s") || args[contatore].equals("-t") ||
                 			    args[contatore].equals("/t") || args[contatore].equals("-r") || args[contatore].equals("/r") ||
                 			    args[contatore].equals("-?") || args[contatore].equals("/?") || args[contatore].equals("help") ||
-                			    args[contatore].equals("-p") || args[contatore].equals("/p")) {
+                			    args[contatore].equals("-p") || args[contatore].equals("/p") || args[contatore].equals("-np") ||
+                			    args[contatore].equals("/np") || args[contatore].equals("-e") || args[contatore].equals("/e") ||
+                			    args[contatore].equals("-te") || args[contatore].equals("/te")) {
                 			break;
                 			
                 		}
                 		jITArgs.add(args[contatore]);
                 	}
+                }else if(arg.equals("-np") || arg.equals(("/np"))) {
+                	noPackage = true;
+                }else if(arg.equals("-e") || arg.equals("/e")) {
+                int contatore = Arrays.asList(args).indexOf(arg)+1; //Ho i miei motivi per cui si chiama contatore
+                 if(contatore < args.length && !(args[contatore].equals("-s") || args[contatore].equals("/s") || args[contatore].equals("-t") ||
+         			    args[contatore].equals("/t") || args[contatore].equals("-r") || args[contatore].equals("/r") ||
+         			    args[contatore].equals("-?") || args[contatore].equals("/?") || args[contatore].equals("help") ||
+         			    args[contatore].equals("-p") || args[contatore].equals("/p") || args[contatore].equals("-np") ||
+         			    args[contatore].equals("/np") || args[contatore].equals("-e") || args[contatore].equals("/e") ||
+         			    args[contatore].equals("-te") || args[contatore].equals("/te"))) {
+                	pathCustomExtensions = args[contatore];
+                 }
+                }else if(arg.equals("-te") || arg.equals("/te")) {
+                	mantieniEstensioni = true;
                 }
             }
             if(!file.getName().endsWith(".javaita") && !invertiTranspiler) {throw new Exception("IL file allegato non è un file  JavaITA");}
         } else {
             throw new Exception("Errore di sintassi, uso: javaita <percorso>");
         }
-
+    	//Parte estensioni
+    	try {
+    		File extension = null;
+    		if(pathCustomExtensions != null) {
+    			ExternExtension = new File(pathCustomExtensions);
+    			extension = new File(cartellaBase + "/../extensions");
+				extension.mkdirs();
+    			if(ExternExtension.isDirectory()) {
+    				for(File fileExt: ExternExtension.listFiles()) {
+    					Path sorgente = Paths.get(ExternExtension.getAbsolutePath() +"/"+ fileExt.getName());
+    					File f = new File(extension +"/"+ fileExt.getName());
+    					Path destinazione = Paths.get(f.getAbsolutePath());
+    					Files.copy(sorgente, destinazione, StandardCopyOption.REPLACE_EXISTING);
+    				}
+    			}else {
+    				Path sorgente = Paths.get(ExternExtension.getAbsolutePath());
+					File f = new File(extension +"/"+ ExternExtension.getName());
+					Path destinazione = Paths.get(f.getAbsolutePath());
+					Files.copy(sorgente, destinazione, StandardCopyOption.REPLACE_EXISTING);
+    			}
+    		}else {
+	            extension = new File(pathCodice + "/extensions");
+	            extension.mkdirs();
+    		}
+            if(!extension.isDirectory() || !extension.exists()) {
+            	throw new Exception("la directory extensions non esiste");
+            }
+            if(extension.listFiles().length == 0) {
+            	throw new Exception("nessuna estensione disponibile");
+            }
+            for (File f: extension.listFiles()) {
+               if(f.getName().endsWith(".jitaext")) {
+                FileReader fr = new FileReader(f);
+                BufferedReader br = new BufferedReader(fr);
+               ArrayList<String> righeExt = new ArrayList<String>();
+               String linea;
+               while((linea = br.readLine()) != null) {
+                    if(!linea.trim().startsWith("//")) {
+                        righeExt.add(linea);
+                       // System.out.println("Trovata linea: "+linea);
+                    }
+               }
+               br.close();
+               fr.close();
+               for(String riga: righeExt) {
+                String[] p = riga.split("-->");
+                if(p.length >= 2) {
+                parole.put(p[0], p[1]); 
+            //    System.out.println(parole.get(p[0]));
+                }
+               }
+               }
+            }
+    }catch(Exception  e) {
+    	e.printStackTrace();
+    }
+        	
+              
+              mappaInvertita = parole.entrySet()
+    				    .stream()
+    				    .collect(Collectors.toMap(
+    				        Map.Entry::getValue, 
+    				        Map.Entry::getKey,
+    				        (oldValue, newValue) -> newValue, 
+    				        HashMap::new                     
+    				    ));
+        //Fine Parte Estensioni
         caratteri = new char[(int) file.length()];
         String nomeConEstensione = file.getName();
         
@@ -260,6 +313,26 @@ try {
                     }
                 }
             }
+        	if (!mantieniEstensioni) {
+                File dir = new File(cartellaBase.concat("/.."));
+                File[] files = dir.listFiles();
+                    if(ExternExtension != null && ExternExtension.isDirectory()) {
+                	for (File f : ExternExtension.listFiles()) {
+                		for(File file: files) {
+	                        if (file.getName().startsWith(f.getName())) {
+	                            file.delete();
+	                        }
+                		}
+                    }
+                   
+                }else if(ExternExtension != null && !ExternExtension.isDirectory()) {
+                	for(File f: files) {
+                		if(f.getName().startsWith(ExternExtension.getName())) {
+                			f.delete();
+                		}
+                	}
+                }
+            }
         } catch (Exception e) { e.printStackTrace(); }
     }
 
@@ -309,6 +382,12 @@ try {
 	                }
                 }
             	if(isDelimitedAfter && isDelimitedThen) {
+            		if(paroleCorrenti().get(parola).equals("package") && noPackage) {
+            			String s = new String(caratteri);
+            			int indicePackage = s.indexOf('\n', s.indexOf(parola)) +1;
+            			puntatore = indicePackage;
+            			return true;
+            		}
 	            	fw.write(paroleCorrenti().get(parola));
 	                puntatore += lParola;
 	                return true;

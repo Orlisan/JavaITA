@@ -217,7 +217,7 @@ sono vuoti-->isEmpty
 sono vuote-->isEmpty
 estende-->extends 
 implementa-->implements 
-pacchetto-->package 
+pacchetto-->package
 importa-->import
 sigillata-->sealed
 blindata-->sealed

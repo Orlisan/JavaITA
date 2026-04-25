@@ -1,0 +1,425 @@
+ pacchetto  JavaITA;
+
+/*Questo è il codice sorgente di JavaITA in JavaITA!!, esso, se usato correttamente, può transpilare file JavaITA transpilandolo in javaITA (esjavaita Main.javaita -np -t -e C:\Users\. . .\JavaITA\extensions -a C:\. .  .\Programmino.javaita, è stato fatto con lo strumento revert (-r), come potrete vedere, c'è stato un piccolo problema di traduzione ad un punto, ma data l'ibridicità del linguaggio compila lo stesso!*/
+
+ importa  java.io.BufferedReader;
+ importa  java.io.File;
+ importa  java.io.FileReader;
+ importa  java.io.FileWriter;
+ importa  java.io.IOException;
+ importa  java.util.ArrayList;
+ importa  java.util.Arrays;
+ importa  java.util.HashMap;
+ importa  java.util.Map;
+ importa  java.util.stream.Collectors;
+ importa  java.nio.file.*;
+
+ pubblica   classe   JavaITA  {
+     statica   Stringa  percorsoJavaITAFile; 
+     statica   Stringa  cartellaBase;
+     statica   Documento  file;
+     statica   carattere  in vettori  caratteri;
+     statica   intero  puntatore diventa 0;
+     statica   carattere  charCorrente;
+     statica   LettoreDocumenti  fr;
+     statica   ScrittoreDocumenti  fw;
+     statica   Stringa  fileName;
+     statica   Documento  tempFile;
+     statica   MappaIndicizzata  fatta di  Stringa ,  Stringa  e basta  mappaInvertita;
+     statica   ListaDiVettori  fatta di  Stringa  e basta  jITArgs diventa  dei nuovi   ListaDiVettori  fatta di  Stringa  e basta  senza parametri ;
+     statica   booleano  isString diventa  falso ;
+     statica   booleano  isComment diventa  falso ;
+     statica   booleano  isComment2 diventa  falso ;
+     statica   booleano  isAdjustedRevert diventa  falso ;
+    
+     statica   booleano  noPackage diventa  falso ;
+    
+     statica   booleano  eseguiSubito diventa  falso ;
+     statica   booleano  mantieniFile diventa  falso ;
+     statica   booleano  invertiTranspiler diventa  falso ;
+     statica   Stringa  pathCustomExtensions diventa  nulla ;
+     statica   booleano  mantieniEstensioni diventa  falso ;
+     statica   Documento  ExternExtension;
+     statica   Stringa  pathCodice diventa JavaITA.class.getProtectionDomain senza parametri .getCodeSource senza parametri .getLocation senza parametri .getPath senza parametri .concat("/..");
+     statica   carattere  in vettori  delimitatori diventa {
+    	    ' ', '\n', '\t', '\r',
+    	    '(', ')', '{', '}', '[', ']',
+    	    '.', ',', ';', ':', 
+    	    '+', '-', '*', '/', '%', '=', '!', '>', '<', '&', '|', '^', '@'
+    	};
+    
+     statica   carattere  in vettori  delimitatoriRevert diventa {
+    	    ' ', '\n', '\t', '\r',
+    	    '(', ')', '{', '}', '[', ']',
+    	     ',', ';', ':', 
+    	    '+', '-', '*', '/', '%', '=', '!', '>', '<', '&', '|', '^', '@'
+    	};
+    
+    
+     statica   immutabile   MappaIndicizzata  fatta di  Stringa ,  Stringa  e basta  parole diventa  dei nuovi   MappaIndicizzata  fatta di  e basta  senza parametri ;
+     pubblica   statica   vuoto   principale ( Stringa  in vettori  args) throws  Eccezione  , cioè 
+    	 Stringa  homeUtente diventa System.getProperty("user.home");
+    	 se  (System.getProperty("os.name").toLowerCase senza parametri .contains("win") , fai 
+            cartellaBase diventa homeUtente sommato a "/AppData/Local/JavaITA/output";
+        .  altrimenti  {
+            cartellaBase diventa homeUtente sommato a "/.javaita/output";
+        }
+    	 se  (args.length sono maggiori o uguali a 1 , fai 
+            percorsoJavaITAFile diventa args fatto da 0 del vettore ;
+            file diventa  dei nuovi   Documento (percorsoJavaITAFile);
+          
+             se (percorsoJavaITAFile.equals("-?") || percorsoJavaITAFile.equals("help") || percorsoJavaITAFile.equals("/?") , fai 
+            	System.out.println("UTILIZZO DI JAVAITA:"
+        				+ "\njavaita <percorso> <parametri>"
+        				+ "\n\n\nPARAMETRI DISPONIBILI:"
+        				+ "\n-s: non esegue il programma transpilato, consigliato l'uso assieme a -t"
+        				+ "\n\n-t: mantiene il file transpilato e quello compilato nella cartella dati di JavaITA"
+        				+ "\n\n-r: esegue il processo opposto a quello di  predefinita : transpila il codice Java  entrata  JavaITA"
+        				+ "\n Attenzione, l'utilizzo dello strumento di revert\n è sconsigliato per progetti medio-complicati,\nData l'imprevedibilità dei termini su concetti avanzati"
+        				+ "\n\n-? Mostra questa legenda");
+        				return;
+            }else if(percorsoJavaITAFile.equals("-p") || percorsoJavaITAFile.equals("/p")) {
+            	File dir = new File(cartellaBase);
+                File[] files = dir.listFiles();
+                if (files != null) {
+                    for (File f : files) {
+                            f.delete();
+                    	}
+                }
+                File dirExt = new File(cartellaBase.concat("/.."));
+                File[] filesExt = dirExt.listFiles();
+                if (filesExt != null) {
+                    for (File f : filesExt) {
+                            f.delete();
+                    	}
+                }
+                return;
+            }
+            for(String arg: args) {
+            	if(arg.equals("-s") || arg.equals("/s")) {
+            		eseguiSubito = true;
+            	}else if(arg.equals("-t") || arg.equals("/t")) {
+            		mantieniFile = true;
+            	}else if(arg.equals("-r") || arg.equals("/r")) {
+            		System.out.println("Attenzione, l'utilizzo dello strumento di revert\n è sconsigliato per progetti medio-complicati,\nData l'imprevedibilità dei termini su concetti avanzati");
+            		invertiTranspiler = true;
+            		mantieniFile = true;
+            		eseguiSubito = true;
+            	}else if(arg.equals("-?") || arg.equals("help") || arg.equals("/?")) {
+            		System.out.println("UTILIZZO DI JAVAITA:"
+            				+ "\njavaita  fatta di percorso e basta   fatta di parametri e basta "
+            				+ "\n\n\nPARAMETRI DISPONIBILI:"
+            				+ "\n-s: non esegue il programma transpilato, consigliato l'uso assieme a -t"
+            				+ "\n\n-t: mantiene il file transpilato e quello compilato nella cartella dati di JavaITA"
+            				+ "\n\n-r: esegue il processo opposto a quello di default: transpila il codice Java in JavaITA"
+            				+ "\n Attenzione, l'utilizzo dello strumento di revert\n è sconsigliato per progetti medio-complicati,\nData l'imprevedibilità dei termini su concetti avanzati"
+            				+ "\n\n-? Mostra questa legenda");
+            				 restituisci ;
+            	} altrimenti   se (arg.equals("-p") || arg.equals("/p") , fai 
+                	 Documento  dir diventa  dei nuovi   Documento (cartellaBase);
+                     Documento  in vettori  files diventa dir.listFiles senza parametri ;
+                     se  (files non sono uguali a  nulla  , fai 
+                        for ( Documento  f interno a files , fai 
+                                f.delete senza parametri ;
+                        	}
+                    }
+                     Documento  dirExt diventa  dei nuovi   Documento (cartellaBase.concat("/.."));
+                     Documento  in vettori  filesExt diventa dirExt.listFiles senza parametri ;
+                     se  (filesExt non sono uguali a  nulla  , fai 
+                        for ( Documento  f interno a filesExt , fai 
+                                f.delete senza parametri ;
+                        	}
+                    }
+                } altrimenti   se (arg.equals("-a") || arg.equals("/a") , fai 
+                	for( intero  contatore diventa Arrays.asList(args).indexOf(arg)+1; contatore sono minori a args.length; contatore++ , fai 
+                		 se (args fatto da contatore del vettore .equals("-s") || args fatto da contatore del vettore .equals("/s") || args fatto da contatore del vettore .equals("-t") ||
+                			    args fatto da contatore del vettore .equals("/t") || args fatto da contatore del vettore .equals("-r") || args fatto da contatore del vettore .equals("/r") ||
+                			    args fatto da contatore del vettore .equals("-?") || args fatto da contatore del vettore .equals("/?") || args fatto da contatore del vettore .equals("help") ||
+                			    args fatto da contatore del vettore .equals("-p") || args fatto da contatore del vettore .equals("/p") || args fatto da contatore del vettore .equals("-np") ||
+                			    args fatto da contatore del vettore .equals("/np") || args fatto da contatore del vettore .equals("-e") || args fatto da contatore del vettore .equals("/e") ||
+                			    args fatto da contatore del vettore .equals("-te") || args fatto da contatore del vettore .equals("/te") , fai 
+                			 interrompi il ciclo ;
+                			
+                		}
+                		jITArgs.add(args fatto da contatore del vettore );
+                	}
+                } altrimenti   se (arg.equals("-np") || arg.equals(("/np")) , fai 
+                	noPackage diventa  vera ;
+                } altrimenti   se (arg.equals("-e") || arg.equals("/e") , fai 
+                 intero  contatore diventa Arrays.asList(args).indexOf(arg)+1; //Ho i miei motivi per cui si chiama contatore
+                  se (contatore sono minori a args.length && !(args fatto da contatore del vettore .equals("-s") || args fatto da contatore del vettore .equals("/s") || args fatto da contatore del vettore .equals("-t") ||
+         			    args fatto da contatore del vettore .equals("/t") || args fatto da contatore del vettore .equals("-r") || args fatto da contatore del vettore .equals("/r") ||
+         			    args fatto da contatore del vettore .equals("-?") || args fatto da contatore del vettore .equals("/?") || args fatto da contatore del vettore .equals("help") ||
+         			    args fatto da contatore del vettore .equals("-p") || args fatto da contatore del vettore .equals("/p") || args fatto da contatore del vettore .equals("-np") ||
+         			    args fatto da contatore del vettore .equals("/np") || args fatto da contatore del vettore .equals("-e") || args fatto da contatore del vettore .equals("/e") ||
+         			    args fatto da contatore del vettore .equals("-te") || args fatto da contatore del vettore .equals("/te")) , fai 
+                	pathCustomExtensions diventa args fatto da contatore del vettore ;
+                 }
+                } altrimenti   se (arg.equals("-te") || arg.equals("/te") , fai 
+                	mantieniEstensioni diventa  vera ;
+                }
+            }
+             se è vero che il !file.getName senza parametri .endsWith(".javaita") && !invertiTranspiler , fai throw  dei nuovi   Eccezione ("IL file allegato non è un file  JavaITA");}
+        .  altrimenti  {
+            throw  dei nuovi   Eccezione ("Errore di sintassi, uso: javaita <percorso>");
+        }
+    	//Parte estensioni
+    	 prova  {
+    		 Documento  extension diventa  nulla ;
+    		 se (pathCustomExtensions non sono uguali a  nulla  , fai 
+    			ExternExtension diventa  dei nuovi   Documento (pathCustomExtensions);
+    			extension diventa  dei nuovi   Documento (cartellaBase sommato a "/../extensions");
+				extension.mkdirs senza parametri ;
+    			 se (ExternExtension.isDirectory senza parametri  , fai 
+    				for( Documento  fileExt: ExternExtension.listFiles senza parametri  , fai 
+    					Path sorgente diventa Paths.get(ExternExtension.getAbsolutePath senza parametri  concatenata a "/"+ fileExt.getName senza parametri );
+    					 Documento  f diventa  dei nuovi   Documento (extension concatenata a "/"+ fileExt.getName senza parametri );
+    					Path destinazione diventa Paths.get(f.getAbsolutePath senza parametri );
+    					Files.copy(sorgente, destinazione, StandardCopyOption.REPLACE_EXISTING);
+    				}
+    			} altrimenti  {
+    				Path sorgente diventa Paths.get(ExternExtension.getAbsolutePath senza parametri );
+					 Documento  f diventa  dei nuovi   Documento (extension concatenata a "/"+ ExternExtension.getName senza parametri );
+					Path destinazione diventa Paths.get(f.getAbsolutePath senza parametri );
+					Files.copy(sorgente, destinazione, StandardCopyOption.REPLACE_EXISTING);
+    			}
+    		} altrimenti  {
+	            extension diventa  dei nuovi   Documento (pathCodice sommato a "/extensions");
+	            extension.mkdirs senza parametri ;
+    		}
+             se è vero che il !extension.isDirectory senza parametri  || !extension.exists senza parametri  , fai 
+            	throw  dei nuovi   Eccezione ("la directory extensions non esiste");
+            }
+             se (extension.listFiles senza parametri .length è uguale a 0 , fai 
+            	throw  dei nuovi   Eccezione ("nessuna estensione disponibile");
+            }
+            for ( Documento  f: extension.listFiles senza parametri  , fai 
+                se (f.getName senza parametri .endsWith(".jitaext") , fai 
+                 LettoreDocumenti  fr diventa  dei nuovi   LettoreDocumenti (f);
+                BufferedReader br diventa  dei nuovi  BufferedReader(fr);
+                ListaDiVettori  fatta di  Stringa  e basta  righeExt diventa  dei nuovi   ListaDiVettori  fatta di  Stringa  e basta  senza parametri ;
+                Stringa  linea;
+                mentre ((linea diventa br.readLine senza parametri ) non sono uguali a  nulla  , fai 
+                     se è vero che il !linea.trim senza parametri .startsWith("//")) {
+                        righeExt.add(linea);
+                       // System.out.println("Trovata linea: "+linea);
+                    }
+               }
+               br.close senza parametri ;
+               fr.close senza parametri ;
+               for( Stringa  riga: righeExt , fai 
+                 Stringa  in vettori  p diventa riga.split("-->");
+                 se (p.length sono maggiori o uguali a 2 , fai 
+                parole.put(p fatto da 0 del vettore , p fatto da 1 del vettore ); 
+            //    System.out.println(parole.get(p[0]));
+                }
+               }
+               }
+            }
+    } cattura ( Eccezione   e , fai 
+    	e.printStackTrace senza parametri ;
+    }
+        	
+              
+              mappaInvertita diventa parole.entrySet senza parametri 
+    				    .stream senza parametri 
+    				    .collect(Collectors.toMap(
+    				        Map.Entry::getValue, 
+    				        Map.Entry::getKey,
+    				        (oldValue, newValue) tale che newValue, 
+    				         MappaIndicizzata :: dei nuovi                      
+    				    ));
+        //Fine Parte Estensioni
+        caratteri diventa  dei nuovi   carattere  fatto da ( intero ) file.length senza parametri  del vettore ;
+         Stringa  nomeConEstensione diventa file.getName senza parametri ;
+        
+        fileName diventa "";
+         intero  puntoIndex diventa nomeConEstensione.lastIndexOf('.');
+        
+         se  (puntoIndex sono maggiori a 0 , fai 
+            fileName diventa nomeConEstensione.substring(0, puntoIndex);
+        .  altrimenti  {
+            fileName diventa nomeConEstensione;
+        }
+         dei nuovi   Documento (cartellaBase).mkdirs senza parametri ;
+         se è vero che il !invertiTranspiler , fai 
+         Documento  tempFile diventa  dei nuovi   Documento (cartellaBase sommato a "/" sommato a fileName sommato a ".java"); fw diventa  dei nuovi   ScrittoreDocumenti (tempFile);
+        } altrimenti  {
+        	 Documento  tempFile diventa  dei nuovi   Documento (cartellaBase sommato a "/" sommato a fileName sommato a ".javaita"); fw diventa  dei nuovi   ScrittoreDocumenti (tempFile);
+        }
+
+         prova  {
+             Stringa  contenuto diventa Files.readString(file.toPath senza parametri );
+            caratteri diventa contenuto.toCharArray senza parametri ;
+        .  cattura  (IOException e , fai 
+            e.printStackTrace senza parametri ;
+             restituisci ;
+        }
+
+         mentre  (puntatore non sono uguali a caratteri.length , fai 
+            charCorrente diventa caratteri fatto da puntatore del vettore ;
+             se è vero che il !(puntatore-1 sono minori a 0) && !(puntatore-2 sono minori a 0) , fai 
+	             se  ((charCorrente è uguale a '\'' && !(caratteri[puntatore+1] == '\'' && caratteri fatto da puntatore-1 del vettore  è uguale a '\'' ) && !(caratteri[puntatore-1] == '\'' && caratteri fatto da puntatore-2 del vettore  è uguale a '\'' ))|| charCorrente == '\"' && !(caratteri fatto da puntatore+1 del vettore  è uguale a '\"' && caratteri[puntatore-1] == '\"' fine && !(caratteri fatto da puntatore-1 del vettore  è uguale a '\"' && caratteri[puntatore-2] == '\"' ) , fai 
+	                isString diventa !isString; 
+	            . 
+            }
+             se (puntatore+1 sono minori a caratteri.length , fai 
+	             se (charCorrente è uguale a '/' && caratteri fatto da puntatore concatenata a 1 del vettore  è uguale a '/' && !isComment , fai 
+	            	isComment diventa  vera ;
+	            }
+	             se (charCorrente è uguale a '\n' && isComment , fai 
+	            	isComment diventa  falso ;
+	            }
+	             se (charCorrente è uguale a '/' && caratteri fatto da puntatore concatenata a 1 del vettore  è uguale a '*' && !isComment2 , fai 
+	            	isComment2 diventa  vera ;
+	            }
+	             se (charCorrente è uguale a '*' && caratteri fatto da puntatore concatenata a 1 del vettore  è uguale a '/' && isComment2 , fai 
+	            	isComment2 diventa  falso ;
+	            }
+	            }
+             se  (!isString && !isComment && !isComment2 , fai 
+                 se  (scanChar(puntatore))  continua ; 
+            }
+            fw.write(charCorrente);
+            puntatore++;
+        }
+        fw.close senza parametri ; 
+         prova  {
+        	 se  (!eseguiSubito , fai 
+        	     Stringa  binPath diventa cartellaBase;
+        	     Stringa  javaFile diventa binPath sommato a "/" sommato a fileName sommato a ".java";
+
+        	     prova  {
+        	        Process compile diventa  dei nuovi  ProcessBuilder("javac", javaFile)
+        	                .inheritIO senza parametri 
+        	                .start senza parametri ;
+        	         intero  exitCode diventa compile.waitFor senza parametri ;
+
+        	         se  (exitCode è uguale a 0 , fai 
+        	        	 ListaDiVettori  fatta di  Stringa  e basta  cmd diventa  dei nuovi   ListaDiVettori  fatta di  e basta (Arrays.asList("java", "-cp", binPath, fileName));
+        	        	cmd.addAll(jITArgs);
+        	        	 dei nuovi  ProcessBuilder(cmd).inheritIO senza parametri .start senza parametri .waitFor senza parametri ;
+        	        }
+        	    .  cattura  ( Eccezione  e , fai 
+        	        e.printStackTrace senza parametri ;
+        	    }
+        	}
+        	 se  (!mantieniFile , fai 
+                 Documento  dir diventa  dei nuovi   Documento (cartellaBase);
+                 Documento  in vettori  files diventa dir.listFiles senza parametri ;
+                 se  (files non sono uguali a  nulla  , fai 
+                    for ( Documento  f interno a files , fai 
+                         se  (f.getName senza parametri .startsWith(fileName) , fai 
+                            f.delete senza parametri ;
+                        }
+                    }
+                }
+            }
+        	 se  (!mantieniEstensioni , fai 
+                 Documento  dir diventa  dei nuovi   Documento (cartellaBase.concat("/.."));
+                 Documento  in vettori  files diventa dir.listFiles senza parametri ;
+                     se (ExternExtension non sono uguali a  nulla  && ExternExtension.isDirectory senza parametri  , fai 
+                	for ( Documento  f interno a ExternExtension.listFiles senza parametri  , fai 
+                		for( Documento  file: files , fai 
+	                         se  (file.getName senza parametri .startsWith(f.getName senza parametri ) , fai 
+	                            file.delete senza parametri ;
+	                        }
+                		}
+                    }
+                   
+                } altrimenti   se (ExternExtension non sono uguali a  nulla  && !ExternExtension.isDirectory senza parametri  , fai 
+                	for( Documento  f: files , fai 
+                		 se (f.getName senza parametri .startsWith(ExternExtension.getName senza parametri ) , fai 
+                			f.delete senza parametri ;
+                		}
+                	}
+                }
+            }
+        .  cattura  ( Eccezione  e , fai  e.printStackTrace senza parametri ; }
+    }
+
+     pubblica   statica   booleano  scanChar( intero  index) throws IOException {
+       
+        for ( Stringa  parola interno a paroleCorrenti senza parametri .keySet senza parametri .stream senza parametri .sorted((a, b) tale che b.length senza parametri  sottratto a a.length senza parametri ).toList senza parametri  , fai 
+        	  booleano  isDelimitedAfter diventa  falso ;
+              booleano  isDelimitedThen diventa  falso ;
+        	
+             intero  lParola diventa parola.length senza parametri ;
+             carattere  in vettori  pezziParola diventa parola.toCharArray senza parametri ;
+
+             intero  contatoreCharAppaiati diventa 0;
+
+            for ( intero  i diventa 0; i sono minori a lParola; i++ , fai 
+                se (index concatenata a lParola sono minori o uguali a caratteri.length , fai  //Te lo controlla già qua, se non passa, il contatore non aumenta e non arriva al blocco dopo
+            	 se  (index sommato a i sono minori a caratteri.length && pezziParola fatto da i del vettore  è uguale a caratteri fatto da index sommato a i del vettore  , fai 
+                    contatoreCharAppaiati++;
+                }
+               }
+            }
+           
+             se  (contatoreCharAppaiati è uguale a lParola , fai 
+                
+            	for( carattere  del: delimitatoriCorrenti senza parametri  , fai 
+	                 se (charCorrente è uguale a del && invertiTranspiler , fai 
+	                	isDelimitedAfter diventa  vera ;
+	                	isDelimitedThen diventa  vera ; 
+            			
+	                .  altrimenti  {
+	                	 se (index -1 non sono uguali a -1 , fai 
+		                	 se è vero che il  caratteri fatto da index -1 del vettore  è uguale a del fine {
+		                		isDelimitedAfter diventa  vera ;
+		                	
+		                	}
+	                	} altrimenti  {
+	                		isDelimitedAfter diventa  vera ;
+	                		
+	                	}
+	                	 se  (index sommato a lParola sono maggiori o uguali a caratteri.length , fai  
+	                        isDelimitedThen diventa  vera ; 
+	                    .  altrimenti  {
+		                	 se (index+lParola sono minori a caratteri.length && caratteri fatto da index sommato a lParola del vettore  è uguale a del , fai 
+		                		isDelimitedThen diventa  vera ;
+		                	}
+	                    }
+	                }
+                }
+            	 se (isDelimitedAfter && isDelimitedThen , fai 
+            		 se (paroleCorrenti senza parametri .get(parola).equals("package") && noPackage , fai 
+            			 Stringa  s diventa  dei nuovi   Stringa (caratteri);
+            			 intero  indicePackage diventa s.indexOf('\n', s.indexOf(parola)) concatenata a 1;
+            			puntatore diventa indicePackage;
+            			 restituisci   vera ;
+            		}
+	            	fw.write(paroleCorrenti senza parametri .get(parola));
+	                puntatore aumenta di lParola;
+	                 restituisci   vera ;
+            	}
+            }
+           }
+         restituisci   falso ;
+    }
+     statica   MappaIndicizzata  fatta di  Stringa ,  Stringa  e basta  paroleCorrenti senza parametri  {
+		 se (invertiTranspiler , fai 
+             se è vero che il !isAdjustedRevert , fai 
+                for( Stringa  parola: mappaInvertita.keySet senza parametri  , fai 
+                     Stringa  parolaSpaziata diventa " ".concat(mappaInvertita.get(parola)).concat(" ");
+                    mappaInvertita.put(parola, parolaSpaziata);
+                }
+                
+                isAdjustedRevert diventa  vera ;
+            }
+			 restituisci  mappaInvertita;
+		} altrimenti  {
+			 restituisci  parole;
+		}
+    }
+    
+     statica   carattere  in vettori  delimitatoriCorrenti senza parametri  {
+    	 se (invertiTranspiler , fai 
+    		 restituisci  delimitatoriRevert;
+    	} altrimenti  {
+    		 restituisci  delimitatori;
+    	}
+    }
+    
+    }

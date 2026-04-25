@@ -30,8 +30,18 @@ Dopo aver seguito i passaggi sopraelencati per usare il transpilatore bisognerà
 
 ```-a <arg1> <arg2> ...``` o ```/a <arg1> <arg2> ...``` : trasmette argomenti al programma JavaITA in esecuzione
 
+```-np``` o ```/np``` : rimuove la riga "package" dal file transpilato, utile per eseguire file che appartengono a un package senza dover gestire la struttura delle cartelle
+
+```-e <percorso>``` o ```/e <percorso>``` : sostituisce le estensioni predefinite con quelle nella cartella o nel file specificato
+
+```-te``` o ```/te``` : mantiene le estensioni custom caricate con -e nella cartella dati di JavaITA dopo l'esecuzione
+
 ### Requisiti
 
 Un computer con Windows, Linux o MacOS
 
 JavaSE e jdk installato sul dispositivo 17 o superiore, java configurato correttamente nel PATH
+
+#### Nota
+
+JavaITA è stato usato per transpilare se stesso in Java, ottenendo un eseguibile che — ricevendo il sorgente di un programma JavaITA come argomento tramite -a — lo ha transpilato ed eseguito correttamente. Un transpiler scritto in un linguaggio che transpila in Java, che transpila un programma nello stesso linguaggio.
