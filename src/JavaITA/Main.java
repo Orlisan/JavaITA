@@ -29,6 +29,19 @@ public class Main {
     static boolean isComment = false;
     static boolean isComment2 = false;
     static boolean isAdjustedRevert = false;
+    static String[] args;
+    static String javaITAHelp = "UTILIZZO DI JAVAITA:"
+			+ "\njavaita <percorso> <parametri>"
+			+ "\n\n\nPARAMETRI DISPONIBILI:"
+			+ "\n-s: non esegue il programma transpilato, consigliato l'uso assieme a -t"
+			+ "\n\n-t: mantiene il file transpilato e quello compilato nella cartella dati di JavaITA"
+			+ "\n\n-r: esegue il processo opposto a quello di default: transpila il codice Java in JavaITA"
+			+ "\nAttenzione, l'utilizzo dello strumento di revert\n è sconsigliato per progetti medio-complicati,\nData l'imprevedibilità dei termini su concetti avanzati"
+			+ "\n\n-? Mostra questa legenda"
+			+ "\n\n-a <parametri> trasmette parametri al programma javaita in esecuzione,\nper utilizzare parametri del programma javaita che hanno nome uguale a quelli del transpilatore:\nutilizzare \"<parametro\""
+			+ "\n\n-e <percorso> utilizza una directory o un file di estensioni alternativa a quella base"
+			+ "\n\n-te mantiene nella cartella dati le estensioni alternative utilizzate con -e"
+			+ "\n\n-np cancella la riga del package se presente";
     
     static boolean noPackage = false;
     
@@ -56,6 +69,7 @@ public class Main {
     
     static final HashMap<String, String> parole = new HashMap<>();
     public static void main(String[] args) throws Exception { 
+    	Main.args = args;
     	String homeUtente = System.getProperty("user.home");
     	if (System.getProperty("os.name").toLowerCase().contains("win")) {
             cartellaBase = homeUtente + "/AppData/Local/JavaITA/output";
@@ -67,14 +81,7 @@ public class Main {
             file = new File(percorsoJavaITAFile);
           
             if(percorsoJavaITAFile.equals("-?") || percorsoJavaITAFile.equals("help") || percorsoJavaITAFile.equals("/?")) {
-            	System.out.println("UTILIZZO DI JAVAITA:"
-        				+ "\njavaita <percorso> <parametri>"
-        				+ "\n\n\nPARAMETRI DISPONIBILI:"
-        				+ "\n-s: non esegue il programma transpilato, consigliato l'uso assieme a -t"
-        				+ "\n\n-t: mantiene il file transpilato e quello compilato nella cartella dati di JavaITA"
-        				+ "\n\n-r: esegue il processo opposto a quello di default: transpila il codice Java in JavaITA"
-        				+ "\n Attenzione, l'utilizzo dello strumento di revert\n è sconsigliato per progetti medio-complicati,\nData l'imprevedibilità dei termini su concetti avanzati"
-        				+ "\n\n-? Mostra questa legenda");
+            	System.out.println(javaITAHelp);
         				return;
             }else if(percorsoJavaITAFile.equals("-p") || percorsoJavaITAFile.equals("/p")) {
             	File dir = new File(cartellaBase);
@@ -104,14 +111,7 @@ public class Main {
             		mantieniFile = true;
             		eseguiSubito = true;
             	}else if(arg.equals("-?") || arg.equals("help") || arg.equals("/?")) {
-            		System.out.println("UTILIZZO DI JAVAITA:"
-            				+ "\njavaita <percorso> <parametri>"
-            				+ "\n\n\nPARAMETRI DISPONIBILI:"
-            				+ "\n-s: non esegue il programma transpilato, consigliato l'uso assieme a -t"
-            				+ "\n\n-t: mantiene il file transpilato e quello compilato nella cartella dati di JavaITA"
-            				+ "\n\n-r: esegue il processo opposto a quello di default: transpila il codice Java in JavaITA"
-            				+ "\n Attenzione, l'utilizzo dello strumento di revert\n è sconsigliato per progetti medio-complicati,\nData l'imprevedibilità dei termini su concetti avanzati"
-            				+ "\n\n-? Mostra questa legenda");
+            		System.out.println(javaITAHelp);
             				return;
             	}else if(arg.equals("-p") || arg.equals("/p")) {
                 	File dir = new File(cartellaBase);
@@ -130,27 +130,21 @@ public class Main {
                     }
                 }else if(arg.equals("-a") || arg.equals("/a")) {
                 	for(int contatore = Arrays.asList(args).indexOf(arg)+1; contatore < args.length; contatore++) {
-                		if(args[contatore].equals("-s") || args[contatore].equals("/s") || args[contatore].equals("-t") ||
-                			    args[contatore].equals("/t") || args[contatore].equals("-r") || args[contatore].equals("/r") ||
-                			    args[contatore].equals("-?") || args[contatore].equals("/?") || args[contatore].equals("help") ||
-                			    args[contatore].equals("-p") || args[contatore].equals("/p") || args[contatore].equals("-np") ||
-                			    args[contatore].equals("/np") || args[contatore].equals("-e") || args[contatore].equals("/e") ||
-                			    args[contatore].equals("-te") || args[contatore].equals("/te")) {
+                		if(isParameter(contatore)) {
                 			break;
                 			
                 		}
-                		jITArgs.add(args[contatore]);
+                		if(args[contatore].startsWith(">")) {
+                			jITArgs.add(args[contatore].substring(1));
+                		}else {
+                			jITArgs.add(args[contatore]);
+                		}
                 	}
                 }else if(arg.equals("-np") || arg.equals(("/np"))) {
                 	noPackage = true;
                 }else if(arg.equals("-e") || arg.equals("/e")) {
                 int contatore = Arrays.asList(args).indexOf(arg)+1; //Ho i miei motivi per cui si chiama contatore
-                 if(contatore < args.length && !(args[contatore].equals("-s") || args[contatore].equals("/s") || args[contatore].equals("-t") ||
-         			    args[contatore].equals("/t") || args[contatore].equals("-r") || args[contatore].equals("/r") ||
-         			    args[contatore].equals("-?") || args[contatore].equals("/?") || args[contatore].equals("help") ||
-         			    args[contatore].equals("-p") || args[contatore].equals("/p") || args[contatore].equals("-np") ||
-         			    args[contatore].equals("/np") || args[contatore].equals("-e") || args[contatore].equals("/e") ||
-         			    args[contatore].equals("-te") || args[contatore].equals("/te"))) {
+                 if(contatore < args.length && !isParameter(contatore)) {
                 	pathCustomExtensions = args[contatore];
                  }
                 }else if(arg.equals("-te") || arg.equals("/te")) {
@@ -419,5 +413,17 @@ public class Main {
     		return delimitatori;
     	}
     }
+    public static boolean isParameter(int contatore) {
+    	if(contatore < args.length && !(args[contatore].equals("-s") || args[contatore].equals("/s") || args[contatore].equals("-t") ||
+ 			    args[contatore].equals("/t") || args[contatore].equals("-r") || args[contatore].equals("/r") ||
+ 			    args[contatore].equals("-?") || args[contatore].equals("/?") || args[contatore].equals("help") ||
+ 			    args[contatore].equals("-p") || args[contatore].equals("/p") || args[contatore].equals("-np") ||
+ 			    args[contatore].equals("/np") || args[contatore].equals("-e") || args[contatore].equals("/e") ||
+ 			    args[contatore].equals("-te") || args[contatore].equals("/te"))) {
+    		return true;
+    }else {
+    	return false;
+    }
     
     }
+}
