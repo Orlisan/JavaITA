@@ -1,0 +1,14 @@
+Blocco-->Block
+ComportamentoBlocco-->BlockBehaviour
+allInizializzazione-->onInitialize
+Mescolanza-->Mixin
+Oggetto-->Item
+OggettoBlocco-->BlockItem
+TagComposto-->CompoundTag
+EntitàBlocco-->BlockEntity
+allInizializzazioneCliente-->onInitializeClient
+ChiaveRisorsa-->ResourceKey
+Registro-->Registry
+registra-->register
+Registri-->Registries
+ottieniIstanza-->getInstance

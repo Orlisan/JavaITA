@@ -79,7 +79,7 @@ public class JavaITATranspiler {
     
     
     HashMap<String, String> parole = new HashMap<>();
-    public JavaITATranspiler(String[] args) throws Exception { 
+    public JavaITATranspiler(String... args) throws Exception { 
     	this.args = args;
     	String homeUtente = System.getProperty("user.home");
     	if (System.getProperty("os.name").toLowerCase().contains("win")) {
