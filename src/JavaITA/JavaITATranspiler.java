@@ -327,7 +327,7 @@ public class JavaITATranspiler {
                         }
                     }
                 }
-            }
+            }	
         	if (!mantieniEstensioni) {
                 File dir = new File(cartellaBase.concat("/.."));
                 File[] files = dir.listFiles();
@@ -450,7 +450,8 @@ public class JavaITATranspiler {
  			    args[contatore].equals("-?") || args[contatore].equals("/?") || args[contatore].equals("help") ||
  			    args[contatore].equals("-p") || args[contatore].equals("/p") || args[contatore].equals("-np") ||
  			    args[contatore].equals("/np") || args[contatore].equals("-e") || args[contatore].equals("/e") ||
- 			    args[contatore].equals("-te") || args[contatore].equals("/te"))) {
+ 			    args[contatore].equals("-te") || args[contatore].equals("/te") || args[contatore].equals("-o")||
+ 			    args[contatore].equals("/o"))) {
     		return true;
     }else {
     	return false;
