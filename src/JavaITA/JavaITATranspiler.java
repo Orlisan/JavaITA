@@ -12,24 +12,34 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.nio.file.*;
 
-public class Main {
-    static String percorsoJavaITAFile; 
-    static String cartellaBase;
-    static File file;
-    static char[] caratteri;
-    static int puntatore = 0;
-    static char charCorrente;
-    static FileReader fr;
-    static FileWriter fw;
-    static String fileName;
-    static File tempFile;
-    static HashMap<String, String> mappaInvertita;
-    static ArrayList<String> jITArgs = new ArrayList<String>();
-    static boolean isString = false;
-    static boolean isComment = false;
-    static boolean isComment2 = false;
-    static boolean isAdjustedRevert = false;
-    static String[] args;
+class Main{
+	public static void main(String[] args) {
+		try {
+			new JavaITATranspiler(args);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+}
+public class JavaITATranspiler {
+    String percorsoJavaITAFile; 
+    String cartellaBase;
+    File file;
+    char[] caratteri;		
+    int puntatore = 0;
+    char charCorrente;
+    FileReader fr;
+    FileWriter fw;
+    String fileName;
+    File tempFile;
+    HashMap<String, String> mappaInvertita;
+    ArrayList<String> jITArgs = new ArrayList<String>();
+    boolean isString = false;
+    boolean isComment = false;
+    boolean isComment2 = false;
+    boolean isAdjustedRevert = false;
+    String[] args;
     static String javaITAHelp = "UTILIZZO DI JAVAITA:"
 			+ "\njavaita <percorso> <parametri>"
 			+ "\n\n\nPARAMETRI DISPONIBILI:"
@@ -43,15 +53,16 @@ public class Main {
 			+ "\n\n-te mantiene nella cartella dati le estensioni alternative utilizzate con -e"
 			+ "\n\n-np cancella la riga del package se presente";
     
-    static boolean noPackage = false;
+    boolean noPackage = false;
     
-    static boolean eseguiSubito = false;
-    static boolean mantieniFile = false;
-    static boolean invertiTranspiler = false;
-    static String pathCustomExtensions = null;
-    static boolean mantieniEstensioni = false;
-    static File ExternExtension;
-    static String pathCodice = Main.class.getProtectionDomain().getCodeSource().getLocation().getPath().concat("/..");
+    boolean eseguiSubito = false;
+    boolean mantieniFile = false;
+    boolean invertiTranspiler = false;
+    boolean customOutput = false;
+    String pathCustomExtensions = null;
+    boolean mantieniEstensioni = false;
+    File ExternExtension;
+    String pathCodice = JavaITATranspiler.class.getProtectionDomain().getCodeSource().getLocation().getPath().concat("/..");
     static char[] delimitatori = {
     	    ' ', '\n', '\t', '\r',
     	    '(', ')', '{', '}', '[', ']',
@@ -67,9 +78,9 @@ public class Main {
     	};
     
     
-    static final HashMap<String, String> parole = new HashMap<>();
-    public static void main(String[] args) throws Exception { 
-    	Main.args = args;
+    HashMap<String, String> parole = new HashMap<>();
+    public JavaITATranspiler(String[] args) throws Exception { 
+    	this.args = args;
     	String homeUtente = System.getProperty("user.home");
     	if (System.getProperty("os.name").toLowerCase().contains("win")) {
             cartellaBase = homeUtente + "/AppData/Local/JavaITA/output";
@@ -101,7 +112,15 @@ public class Main {
                 return;
             }
             for(String arg: args) {
-            	if(arg.equals("-s") || arg.equals("/s")) {
+            	if(arg.equals("-o") || arg.equals("/o")) {
+            		String path = args[Arrays.asList(args).indexOf(arg)+1];
+            		if(!Files.exists(Path.of(path)) || !new File(path).isDirectory()) {
+            			throw new Exception("Directory di output non valida");
+            		}else {
+            		customOutput = true;
+            		cartellaBase = path;
+            		}
+            	}else if(arg.equals("-s") || arg.equals("/s")) {
             		eseguiSubito = true;
             	}else if(arg.equals("-t") || arg.equals("/t")) {
             		mantieniFile = true;
@@ -114,7 +133,8 @@ public class Main {
             		System.out.println(javaITAHelp);
             				return;
             	}else if(arg.equals("-p") || arg.equals("/p")) {
-                	File dir = new File(cartellaBase);
+                	if(!Arrays.asList(args).contains("-o") && !Arrays.asList(args).contains("/o")) {
+            		File dir = new File(cartellaBase);
                     File[] files = dir.listFiles();
                     if (files != null) {
                         for (File f : files) {
@@ -128,6 +148,7 @@ public class Main {
                                 f.delete();
                         	}
                     }
+                	}
                 }else if(arg.equals("-a") || arg.equals("/a")) {
                 	for(int contatore = Arrays.asList(args).indexOf(arg)+1; contatore < args.length; contatore++) {
                 		if(isParameter(contatore)) {
@@ -151,7 +172,7 @@ public class Main {
                 	mantieniEstensioni = true;
                 }
             }
-            if(!file.getName().endsWith(".javaita") && !invertiTranspiler) {throw new Exception("IL file allegato non è un file  JavaITA");}
+            if(!file.getName().toLowerCase().endsWith(".javaita") && !invertiTranspiler) {throw new Exception("IL file allegato non è un file  JavaITA");}
         } else {
             throw new Exception("Errore di sintassi, uso: javaita <percorso>");
         }
@@ -301,7 +322,7 @@ public class Main {
                 File[] files = dir.listFiles();
                 if (files != null) {
                     for (File f : files) {
-                        if (f.getName().startsWith(fileName)) {
+                        if (f.getName().equals(fileName+".class") || f.getName().equals(fileName+".java")) {
                             f.delete();
                         }
                     }
@@ -329,8 +350,18 @@ public class Main {
             }
         } catch (Exception e) { e.printStackTrace(); }
     }
-
-    public static boolean scanChar(int index) throws IOException {
+    public void cancellaFile() {
+    	File dir = new File(cartellaBase);
+        File[] files = dir.listFiles();
+        if (files != null) {
+            for (File f : files) {
+                if (f.getName().equals(fileName+".class") || f.getName().equals(fileName+".java")) {
+                    f.delete();
+                }
+            }
+        }
+    }
+    public boolean scanChar(int index) throws IOException {
        
         for (String parola : paroleCorrenti().keySet().stream().sorted((a, b) -> b.length() - a.length()).toList()) {
         	 boolean isDelimitedAfter = false;
@@ -390,7 +421,7 @@ public class Main {
            }
         return false;
     }
-    static HashMap<String, String> paroleCorrenti() {
+    HashMap<String, String> paroleCorrenti() {
 		if(invertiTranspiler) {
             if(!isAdjustedRevert) {
                 for(String parola: mappaInvertita.keySet()) {
@@ -406,14 +437,14 @@ public class Main {
 		}
     }
     
-    static char[] delimitatoriCorrenti() {
+    char[] delimitatoriCorrenti() {
     	if(invertiTranspiler) {
     		return delimitatoriRevert;
     	}else {
     		return delimitatori;
     	}
     }
-    public static boolean isParameter(int contatore) {
+    public boolean isParameter(int contatore) {
     	if(contatore < args.length && !(args[contatore].equals("-s") || args[contatore].equals("/s") || args[contatore].equals("-t") ||
  			    args[contatore].equals("/t") || args[contatore].equals("-r") || args[contatore].equals("/r") ||
  			    args[contatore].equals("-?") || args[contatore].equals("/?") || args[contatore].equals("help") ||
