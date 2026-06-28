@@ -45,3 +45,6 @@ JavaSE e jdk installato sul dispositivo 17 o superiore, java configurato corrett
 #### Nota
 
 JavaITA è stato usato per transpilare se stesso in Java, ottenendo un eseguibile che — ricevendo il sorgente di un programma JavaITA come argomento tramite -a — lo ha transpilato ed eseguito correttamente. Un transpiler scritto in un linguaggio che transpila in Java, che transpila un programma nello stesso linguaggio.
+
+Copyright (c) 2026 Orlisan. All Rights Reserved.
+Source is available for viewing only. No use, modification, or redistribution permitted without explicit permission.
