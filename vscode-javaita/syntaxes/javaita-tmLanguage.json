@@ -1,0 +1,60 @@
+{
+  "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+  "name": "JavaITA",
+  "scopeName": "source.javaita",
+  "patterns": [
+    { "include": "#keywords_control" },
+    { "include": "#keywords_other" },
+    { "include": "#types" },
+    { "include": "#classes" },
+    { "include": "#strings" },
+    { "include": "#comments" },
+    { "include": "#numbers" },
+ { "name": "source.java", "match": "." }
+  ],
+  "repository": {
+    "keywords_control": {
+      "patterns": [{
+        "name": "keyword.control.javaita",
+        "match": "\\b(se|altrimenti|mentre|per|ogni|finch|prova|cattura|infine|restituisci|interrompi|salta|scegli|caso|continua|esegui|lancia|else|if|public|static|void|return|class|record)\\b"
+      }]
+    },
+    "keywords_other": {
+      "patterns": [{
+        "name": "keyword.other.javaita",
+        "match": "\\b(pubblica|pubblico|privata|privato|protetta|protetto|statica|statico|immutabile|finale|astratta|astratto|vuoto|vuota|classe|interfaccia|estende|implementa|pacchetto|importa|nuovo|nuova|nuovi|nuove|questo|questa|padre|madre|sincronizzato|sigillata|sigillato|variabile|transitorio|nativo|volatile|predefinito|predefinita|registro)\\b"
+      }]
+    },
+    "types": {
+      "patterns": [{
+        "name": "support.type.javaita",
+        "match": "\\b(Stringa|intero|booleano|decimale|doppio|carattere|lungo|largo|breve|vero|vera|falso|falsa|nullo|nulla)\\b"
+      }]
+    },
+    "classes": {
+      "patterns": [{
+        "name": "support.class.javaita",
+        "match": "\\b(Lista|Vettore|ListaDiVettori|Mappa|MappaIndicizzata|Dizionario|Documento|Archivio|ScrittoreDocumenti|LettoreDocumenti|Filo|Processo|Esecuzione|Scannerizzatore|Intero|Doppio|Booleano|Decimale|Carattere|Numero|Oggetto|Enumerazione|CostruttoreDiStringhe|BufferDiStringhe|Ambiente|Breve|Blocco|ComportamentoBlocco|Mescolanza|OggettoBlocco|TagComposto|EntitàBlocco|ChiaveRisorsa|Registro|Registri|Identificatore|InizializzatoreMod|Proprietà|Livello|Mondo|LivelloDelServer|PosizioneBlocco|PosizioneChunk|StatoDelBlocco|Giocatore|GiocatoreDelServer|Cliente|Dimensione|Entità|EntitàVivente|ComponenteDeiDati|Componente|GraficaGui)\\b"
+      }]
+    },
+    "strings": {
+      "name": "string.quoted.double.javaita",
+      "begin": "\"",
+      "end": "\""
+    },
+    "comments": {
+      "patterns": [{
+        "name": "comment.line.double-slash.javaita",
+        "match": "//.*$"
+      }, {
+        "name": "comment.block.javaita",
+        "begin": "/\\*",
+        "end": "\\*/"
+      }]
+    },
+    "numbers": {
+      "name": "constant.numeric.javaita",
+      "match": "\\b[0-9]+(\\.[0-9]+)?\\b"
+    }
+  }
+}

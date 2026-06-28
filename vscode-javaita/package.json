@@ -1,0 +1,26 @@
+{
+  "name": "javaita",
+  "displayName": "JavaITA",
+  "description": "Syntax highlighting for JavaITA",
+  "version": "0.0.1",
+  "publisher": "orlisan",
+  "engines": { "vscode": "^1.70.0" },
+  "categories": ["Programming Languages"],
+  "contributes": {
+    "languages": [{
+      "id": "javaita",
+      "aliases": ["JavaITA"],
+      "extensions": [".javaita"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+  "language": "javaita",
+  "scopeName": "source.javaita",
+  "path": "./syntaxes/javaita-tmLanguage.json",
+  "embeddedLanguages": {
+    "source.java": "java"
+  }
+}]
+  },
+  "main": "./extension.js"
+}

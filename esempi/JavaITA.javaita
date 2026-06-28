@@ -159,7 +159,7 @@
                 	mantieniEstensioni diventa  vera ;
                 }
             }
-             se è vero che il !file.getName senza parametri .endsWith(".javaita") && !invertiTranspiler , fai throw  dei nuovi   Eccezione ("IL file allegato non è un file  JavaITA");}
+             se è vero che il !file.getName senza parametri .toLowerCase senza parametri .endsWith(".javaita") && !invertiTranspiler , fai throw  dei nuovi   Eccezione ("IL file allegato non è un file  JavaITA");}
         .  altrimenti  {
             throw  dei nuovi   Eccezione ("Errore di sintassi, uso: javaita <percorso>");
         }
